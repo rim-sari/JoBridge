@@ -1,0 +1,11 @@
+/* Logo navbar */
+.nav-logo img {
+    height: 50%;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Hauteur fixe navbar */
+.nav-inner {
+    height: 65px;
+}

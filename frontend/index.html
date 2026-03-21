@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JoBridge — Connectez les Talents</title>
+<link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -290,27 +291,11 @@ tr:hover td{background:var(--gray-50)}
 <nav id="navbar">
   <div class="nav-inner">
     <div class="nav-logo" onclick="goHome()">
-      <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 75 Q50 20 80 75" stroke="#2ec4a5" stroke-width="7" fill="none" stroke-linecap="round"/>
-        <circle cx="20" cy="75" r="7" fill="#2ec4a5"/>
-        <circle cx="80" cy="75" r="7" fill="#1e2d4a"/>
-        <circle cx="50" cy="30" r="5" fill="#2ec4a5"/>
-        <circle cx="35" cy="52" r="4" fill="#2ec4a5" opacity=".6"/>
-        <circle cx="65" cy="52" r="4" fill="#1e2d4a" opacity=".6"/>
-        <line x1="20" y1="75" x2="35" y2="52" stroke="#2ec4a5" stroke-width="2" opacity=".5"/>
-        <line x1="35" y1="52" x2="50" y2="30" stroke="#2ec4a5" stroke-width="2" opacity=".5"/>
-        <line x1="50" y1="30" x2="65" y2="52" stroke="#1e2d4a" stroke-width="2" opacity=".5"/>
-        <line x1="65" y1="52" x2="80" y2="75" stroke="#1e2d4a" stroke-width="2" opacity=".5"/>
-        <line x1="20" y1="75" x2="50" y2="75" stroke="#2ec4a5" stroke-width="2" opacity=".3"/>
-        <line x1="50" y1="75" x2="80" y2="75" stroke="#1e2d4a" stroke-width="2" opacity=".3"/>
-        <circle cx="50" cy="75" r="4" fill="#2ec4a5" opacity=".5"/>
-      </svg>
-      <div class="logo-text"><span>Jo</span><span>Bridge</span></div>
-    </div>
+<img src="../images/logo/transparent-logo.png" style="height:140px;width:auto;object-fit:contain" alt="JoBridge">    </div>
     <div class="nav-links" id="nav-links">
       <button class="btn btn-ghost" onclick="showPage('home')">Accueil</button>
       <div id="nav-auth-btns">
-        <button class="btn btn-ghost" onclick="openModal('modal-login')">Connexion</button>
+        <button class="btn btn-ghost" onclick="openModal('modal-login')"> Connexion</button>
         <button class="btn btn-primary" onclick="openModal('modal-register-choice')">S'inscrire</button>
       </div>
       <div id="nav-user-btns" class="hidden flex items-center gap-3">
@@ -332,19 +317,19 @@ tr:hover td{background:var(--gray-50)}
     <p>JoBridge connecte les meilleurs talents avec les entreprises qui recrutent. Rejoignez des milliers de candidats et d'entreprises.</p>
     <div class="hero-search">
       <input type="text" id="home-search" placeholder="Rechercher un poste, une compétence, une entreprise..." oninput="filterHomeJobs()">
-      <button onclick="filterHomeJobs()">🔍 Rechercher</button>
+      <button onclick="filterHomeJobs()"> Rechercher</button>
     </div>
     <div class="hero-cta">
-      <button class="btn btn-primary" onclick="openModal('modal-register-choice')">🚀 Démarrer gratuitement</button>
+      <button class="btn btn-primary" onclick="openModal('modal-register-choice')"> Démarrer gratuitement</button>
       <button class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.5)" onclick="openModal('modal-login')">Se connecter</button>
     </div>
   </div>
   <div class="hero-stats" id="hero-stats"></div>
   <div class="section">
-    <h2 class="section-title">📋 Offres d'emploi disponibles</h2>
+    <h2 class="section-title">Offres d'emploi disponibles</h2>
     <div class="jobs-grid" id="home-jobs-grid"></div>
     <div class="empty-state hidden" id="home-empty">
-      <div class="icon">🔍</div>
+      <div class="icon">loupe image</div>
       <p>Aucune offre ne correspond à votre recherche.</p>
     </div>
   </div>
@@ -377,7 +362,7 @@ tr:hover td{background:var(--gray-50)}
       <div id="candidate-dash-content">
         <!-- Overview -->
         <div id="c-overview">
-          <h2 style="color:var(--navy);margin-bottom:1.5rem">Bonjour, <span id="c-name">Candidat</span> 👋</h2>
+          <h2 style="color:var(--navy);margin-bottom:1.5rem">Bonjour, <span id="c-name">Candidat</span></h2>
           <div class="stats-grid">
             <div class="stat-box teal">
               <div class="label">Candidatures envoyées</div>
@@ -569,7 +554,7 @@ tr:hover td{background:var(--gray-50)}
 <div class="modal-overlay hidden" id="modal-login">
   <div class="modal">
     <div class="modal-header">
-      <h3>🔐 Connexion</h3>
+      <h3> Connexion</h3>
       <button class="close-btn" onclick="closeModal('modal-login')">✕</button>
     </div>
     <div class="modal-body">
@@ -582,7 +567,7 @@ tr:hover td{background:var(--gray-50)}
         <label>Mot de passe</label>
         <input class="form-control" type="password" id="login-password" placeholder="••••••••">
       </div>
-      <div style="font-size:.8rem;color:var(--gray-400);margin-bottom:1rem">Admin: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c8a9aca5a1a688a2a7aabaa1acafade6aba7a5">[email&#160;protected]</a> / admin123</div>
+      
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modal-login')">Annuler</button>
@@ -595,7 +580,7 @@ tr:hover td{background:var(--gray-50)}
 <div class="modal-overlay hidden" id="modal-register-choice">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <h3>✨ Créer un compte</h3>
+      <h3> Créer un compte</h3>
       <button class="close-btn" onclick="closeModal('modal-register-choice')">✕</button>
     </div>
     <div class="modal-body">
