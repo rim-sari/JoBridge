@@ -1,12 +1,11 @@
 
-# JoBridge — Plateforme de recrutement en ligne
-
 <div align="center">
-
-<img width="4000" height="4000" alt="image" src="https://github.com/user-attachments/assets/7854dc05-1dd1-4ffa-aba1-84f333884494" />
+  
+# JoBridge — Plateforme de recrutement en ligne
+  
+<img width="400" height="400" alt="image" src="https://github.com/user-attachments/assets/7854dc05-1dd1-4ffa-aba1-84f333884494" />
 
 **JoBridge connecte les talents avec les entreprises qui recrutent.**
-Une plateforme complète avec 3 portails distincts : Candidat, Entreprise et Administrateur.
 
 </div>
 
@@ -14,9 +13,9 @@ Une plateforme complète avec 3 portails distincts : Candidat, Entreprise et Adm
 
 ## Sommaire
 
-- [Présentation](#-présentation)
-- [Fonctionnalités](#-fonctionnalités)
-- [Architecture](#️-architecture)
+- [Présentation](#présentation)
+- [Fonctionnalités](#fonctionnalités)
+- [Architecture](#architecture)
 - [Technologies utilisées](#️-technologies-utilisées)
 - [Démarrage rapide](#-démarrage-rapide)
   - [Prérequis](#prérequis)
