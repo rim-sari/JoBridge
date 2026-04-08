@@ -3,7 +3,7 @@
 
 <div align="center">
 
-![alt text](transparent-logo.png)
+<img width="4000" height="4000" alt="image" src="https://github.com/user-attachments/assets/7854dc05-1dd1-4ffa-aba1-84f333884494" />
 
 **JoBridge connecte les talents avec les entreprises qui recrutent.**
 Une plateforme complète avec 3 portails distincts : Candidat, Entreprise et Administrateur.
