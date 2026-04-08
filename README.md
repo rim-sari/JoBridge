@@ -16,18 +16,18 @@
 - [Présentation](#présentation)
 - [Fonctionnalités](#fonctionnalités)
 - [Architecture](#architecture)
-- [Technologies utilisées](#️-technologies-utilisées)
-- [Démarrage rapide](#-démarrage-rapide)
+- [Technologies utilisées](#technologies-utilisées)
+- [Démarrage rapide](#démarrage-rapide)
   - [Prérequis](#prérequis)
-  - [Installation Backend](#1-installation--configuration-backend)
-  - [Installation Frontend](#2-installation--configuration-frontend)
-  - [Lancer le projet](#3-lancer-le-projet)
+  - [Installation Backend](#1installation--configuration-backend)
+  - [Installation Frontend](#2installation--configuration-frontend)
+  - [Lancer le projet](#3lancer-le-projet)
 
-- [Structure du projet](#-structure-du-projet)
-- [API REST](#-api-rest)
-- [Comptes de test](#-comptes-de-test)
-- [Améliorations prévues](#-améliorations-prévues)
-- [Équipe](#-équipe)
+- [Structure du projet](#structure-du-projet)
+- [API REST](#api-rest)
+- [Comptes de test](#comptes-de-test)
+- [Améliorations prévues](#améliorations-prévues)
+- [Équipe](#équipe)
 
 ---
 
