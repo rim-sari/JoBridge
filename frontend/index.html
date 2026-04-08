@@ -1,1219 +1,1942 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JoBridge — Connectez les Talents</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-:root {
-  --teal: #2ec4a5;
-  --teal-dark: #1fa88c;
-  --teal-light: #e8faf7;
-  --navy: #1e2d4a;
-  --navy-light: #2e4068;
-  --white: #ffffff;
-  --gray-50: #f8fafc;
-  --gray-100: #f1f5f9;
-  --gray-200: #e2e8f0;
-  --gray-400: #94a3b8;
-  --gray-600: #475569;
-  --gray-800: #1e293b;
-  --success: #10b981;
-  --danger: #ef4444;
-  --warning: #f59e0b;
-  --info: #3b82f6;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
-  --shadow-md: 0 4px 16px rgba(0,0,0,.1);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,.14);
-  --radius: 12px;
-  --radius-sm: 8px;
-  --radius-xl: 20px;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;color:var(--gray-800);background:var(--gray-50);min-height:100vh}
-h1,h2,h3,h4,h5{font-family:'Sora',sans-serif}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JoBridge - Connectez les Talents</title>
 
-/* ── UTILS ── */
-.hidden{display:none!important}
-.flex{display:flex}
-.items-center{align-items:center}
-.justify-between{justify-content:space-between}
-.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}
-.text-sm{font-size:.875rem}.text-xs{font-size:.75rem}
-.font-semibold{font-weight:600}.font-bold{font-weight:700}
-.text-teal{color:var(--teal)}.text-navy{color:var(--navy)}
-.text-gray{color:var(--gray-600)}.text-danger{color:var(--danger)}
-.text-success{color:var(--success)}
-.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}
-.mb-2{margin-bottom:.5rem}.mb-4{margin-bottom:1rem}
-.w-full{width:100%}
-.badge{display:inline-flex;align-items:center;padding:.25rem .75rem;border-radius:99px;font-size:.75rem;font-weight:600;font-family:'Sora',sans-serif}
-.badge-teal{background:var(--teal-light);color:var(--teal-dark)}
-.badge-navy{background:#e8edf5;color:var(--navy)}
-.badge-success{background:#d1fae5;color:#065f46}
-.badge-danger{background:#fee2e2;color:#991b1b}
-.badge-warning{background:#fef3c7;color:#92400e}
-.badge-info{background:#dbeafe;color:#1e40af}
-.badge-gray{background:var(--gray-100);color:var(--gray-600)}
-
-/* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.4rem;border-radius:var(--radius-sm);font-family:'Sora',sans-serif;font-weight:600;font-size:.875rem;cursor:pointer;border:none;transition:all .2s;text-decoration:none;white-space:nowrap}
-.btn-primary{background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;box-shadow:0 2px 8px rgba(46,196,165,.35)}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(46,196,165,.45)}
-.btn-navy{background:var(--navy);color:#fff}
-.btn-navy:hover{background:var(--navy-light);transform:translateY(-1px)}
-.btn-outline{background:transparent;border:2px solid var(--teal);color:var(--teal)}
-.btn-outline:hover{background:var(--teal-light)}
-.btn-ghost{background:transparent;color:var(--gray-600);padding:.5rem .9rem}
-.btn-ghost:hover{background:var(--gray-100);color:var(--navy)}
-.btn-danger{background:var(--danger);color:#fff}
-.btn-danger:hover{background:#dc2626}
-.btn-success{background:var(--success);color:#fff}
-.btn-success:hover{background:#059669}
-.btn-sm{padding:.4rem 1rem;font-size:.8rem}
-.btn-icon{padding:.5rem;border-radius:50%;width:2rem;height:2rem;justify-content:center}
-
-/* ── FORMS ── */
-.form-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.1rem}
-.form-group label{font-size:.82rem;font-weight:600;color:var(--gray-600);font-family:'Sora',sans-serif;text-transform:uppercase;letter-spacing:.04em}
-.form-control{width:100%;padding:.7rem 1rem;border:2px solid var(--gray-200);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--gray-800);background:#fff;transition:border-color .2s,box-shadow .2s;outline:none}
-.form-control:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(46,196,165,.12)}
-textarea.form-control{min-height:100px;resize:vertical}
-select.form-control{cursor:pointer}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.input-with-icon{position:relative}
-.input-with-icon .icon{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);color:var(--gray-400)}
-.input-with-icon .form-control{padding-left:2.6rem}
-
-/* ── CARD ── */
-.card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--gray-200);overflow:hidden}
-.card-header{padding:1.2rem 1.5rem;border-bottom:1px solid var(--gray-200);display:flex;align-items:center;justify-content:space-between}
-.card-body{padding:1.5rem}
-.card-footer{padding:1rem 1.5rem;border-top:1px solid var(--gray-200);background:var(--gray-50)}
-
-/* ── ALERT ── */
-.alert{padding:.9rem 1.2rem;border-radius:var(--radius-sm);font-size:.875rem;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
-.alert-success{background:#d1fae5;color:#065f46;border:1px solid #a7f3d0}
-.alert-danger{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
-.alert-info{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
-.alert-warning{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
-
-/* ── NAVBAR ── */
-#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-200);box-shadow:var(--shadow-sm)}
-.nav-inner{max-width:1280px;margin:0 auto;padding:.8rem 2rem;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{display:flex;align-items:center;gap:.6rem;cursor:pointer}
-.logo-icon{width:36px;height:36px}
-.logo-text{font-family:'Sora',sans-serif;font-size:1.35rem;font-weight:800}
-.logo-text span:first-child{color:var(--teal)}
-.logo-text span:last-child{color:var(--navy)}
-.nav-links{display:flex;align-items:center;gap:.5rem}
-.nav-bell{position:relative;cursor:pointer;padding:.5rem;border-radius:50%;transition:background .2s}
-.nav-bell:hover{background:var(--gray-100)}
-.nav-bell .badge-count{position:absolute;top:2px;right:2px;background:var(--danger);color:#fff;border-radius:50%;width:16px;height:16px;font-size:.65rem;display:flex;align-items:center;justify-content:center;font-weight:700}
-.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.85rem;font-family:'Sora',sans-serif;cursor:pointer}
-
-/* ── PAGES ── */
-.page{display:none;min-height:100vh;padding-top:65px}
-.page.active{display:block}
-
-/* ── HERO ── */
-#page-home .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 50%,#1a3a5c 100%);padding:5rem 2rem 3rem;text-align:center;position:relative;overflow:hidden}
-#page-home .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232ec4a5' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
-#page-home .hero h1{font-size:clamp(2rem,5vw,3.2rem);color:#fff;line-height:1.2;margin-bottom:1rem;position:relative}
-#page-home .hero h1 span{color:var(--teal)}
-#page-home .hero p{color:rgba(255,255,255,.75);font-size:1.1rem;max-width:560px;margin:0 auto 2rem;position:relative}
-.hero-search{display:flex;gap:0;max-width:640px;margin:0 auto 2.5rem;position:relative;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.2);overflow:hidden}
-.hero-search input{flex:1;border:none;padding:1rem 1.4rem;font-family:'DM Sans',sans-serif;font-size:.95rem;outline:none;color:var(--gray-800)}
-.hero-search button{background:var(--teal);color:#fff;border:none;padding:1rem 1.8rem;font-family:'Sora',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;transition:background .2s;flex-shrink:0}
-.hero-search button:hover{background:var(--teal-dark)}
-.hero-cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative}
-.hero-stats{max-width:1280px;margin:-1.5rem auto 0;padding:0 2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;position:relative;z-index:1}
-.stat-card{background:#fff;border-radius:var(--radius);padding:1.5rem;text-align:center;box-shadow:var(--shadow-md);border:1px solid var(--gray-200)}
-.stat-card .stat-num{font-family:'Sora',sans-serif;font-size:1.8rem;font-weight:800;color:var(--teal)}
-.stat-card .stat-label{font-size:.82rem;color:var(--gray-600);margin-top:.2rem}
-
-/* ── JOB GRID ── */
-.section{max-width:1280px;margin:0 auto;padding:2.5rem 2rem}
-.section-title{font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:1.5rem}
-.jobs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem}
-.job-card{background:#fff;border-radius:var(--radius);padding:1.5rem;border:2px solid var(--gray-200);transition:all .2s;cursor:pointer}
-.job-card:hover{border-color:var(--teal);box-shadow:var(--shadow-md);transform:translateY(-2px)}
-.job-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
-.company-logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--teal-light),var(--teal));display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;color:var(--teal-dark);font-size:1rem;flex-shrink:0}
-.job-title{font-family:'Sora',sans-serif;font-weight:700;color:var(--navy);font-size:1rem;margin-bottom:.2rem}
-.job-company{font-size:.85rem;color:var(--gray-600)}
-.job-meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
-.job-tag{font-size:.75rem;padding:.2rem .7rem;border-radius:99px;background:var(--gray-100);color:var(--gray-600);font-family:'Sora',sans-serif;font-weight:600}
-.job-tag.teal{background:var(--teal-light);color:var(--teal-dark)}
-
-/* ── MODAL ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
-.modal-overlay.hidden{display:none!important}
-.modal{background:#fff;border-radius:var(--radius-xl);width:100%;max-width:480px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);animation:slideUp .3s ease}
-.modal-lg{max-width:640px}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.modal-header{padding:1.5rem 1.5rem 1rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--gray-200)}
-.modal-header h3{font-size:1.2rem;font-weight:700;color:var(--navy)}
-.modal-body{padding:1.5rem}
-.modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--gray-200);display:flex;justify-content:flex-end;gap:.75rem;background:var(--gray-50)}
-.close-btn{background:none;border:none;cursor:pointer;color:var(--gray-400);padding:.3rem;border-radius:6px;transition:all .2s;font-size:1.2rem;line-height:1;width:30px;height:30px;display:flex;align-items:center;justify-content:center}
-.close-btn:hover{background:var(--gray-100);color:var(--gray-800)}
-.tabs{display:flex;border-bottom:2px solid var(--gray-200);margin-bottom:1.5rem}
-.tab{padding:.7rem 1.2rem;font-family:'Sora',sans-serif;font-weight:600;font-size:.85rem;color:var(--gray-400);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s}
-.tab.active{color:var(--teal);border-bottom-color:var(--teal)}
-.tab:hover{color:var(--navy)}
-
-/* ── DASHBOARD LAYOUT ── */
-.dashboard{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 65px)}
-.sidebar{background:#fff;border-right:1px solid var(--gray-200);padding:1.5rem 0}
-.sidebar-section{margin-bottom:1.5rem}
-.sidebar-title{font-family:'Sora',sans-serif;font-size:.7rem;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.1em;padding:0 1.2rem;margin-bottom:.5rem}
-.sidebar-item{display:flex;align-items:center;gap:.75rem;padding:.65rem 1.2rem;cursor:pointer;color:var(--gray-600);font-size:.875rem;font-weight:500;transition:all .15s;border-left:3px solid transparent;position:relative}
-.sidebar-item:hover{background:var(--gray-50);color:var(--navy)}
-.sidebar-item.active{background:var(--teal-light);color:var(--teal-dark);border-left-color:var(--teal);font-weight:600}
-.sidebar-item .icon{font-size:1rem;width:20px;text-align:center}
-.sidebar-item .notif-dot{width:8px;height:8px;background:var(--danger);border-radius:50%;margin-left:auto}
-.dash-main{padding:2rem;overflow-y:auto;background:var(--gray-50)}
-
-/* ── STATS GRID ── */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem}
-.stat-box{background:#fff;border-radius:var(--radius);padding:1.4rem;border:1px solid var(--gray-200);position:relative;overflow:hidden}
-.stat-box::before{content:'';position:absolute;top:0;right:0;bottom:0;width:4px}
-.stat-box.teal::before{background:var(--teal)}
-.stat-box.navy::before{background:var(--navy)}
-.stat-box.success::before{background:var(--success)}
-.stat-box.danger::before{background:var(--danger)}
-.stat-box .label{font-size:.8rem;color:var(--gray-400);font-family:'Sora',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem}
-.stat-box .value{font-family:'Sora',sans-serif;font-size:1.8rem;font-weight:800;color:var(--navy)}
-.stat-box .sub{font-size:.78rem;color:var(--gray-400);margin-top:.2rem}
-
-/* ── TABLE ── */
-.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--gray-200)}
-table{width:100%;border-collapse:collapse;background:#fff}
-th{background:var(--gray-50);padding:.8rem 1rem;text-align:left;font-family:'Sora',sans-serif;font-size:.78rem;font-weight:700;color:var(--gray-600);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)}
-td{padding:.85rem 1rem;border-bottom:1px solid var(--gray-100);font-size:.875rem;color:var(--gray-800);vertical-align:middle}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--gray-50)}
-.actions-cell{display:flex;gap:.4rem;flex-wrap:wrap}
-
-/* ── NOTIFICATION ── */
-.notif-item{display:flex;gap:.9rem;padding:1rem;border-radius:var(--radius-sm);border:1px solid var(--gray-200);background:#fff;margin-bottom:.75rem;transition:all .2s}
-.notif-item.unread{border-left:3px solid var(--teal);background:var(--teal-light)}
-.notif-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem}
-.notif-icon.teal{background:var(--teal-light);color:var(--teal-dark)}
-.notif-icon.navy{background:#e8edf5;color:var(--navy)}
-.notif-icon.success{background:#d1fae5;color:#065f46}
-.notif-icon.danger{background:#fee2e2;color:#991b1b}
-.notif-title{font-weight:600;font-size:.875rem;color:var(--navy);margin-bottom:.2rem}
-.notif-body{font-size:.8rem;color:var(--gray-600)}
-.notif-time{font-size:.72rem;color:var(--gray-400);margin-top:.3rem}
-
-/* ── FILE UPLOAD ── */
-.file-upload{border:2px dashed var(--gray-200);border-radius:var(--radius-sm);padding:2rem;text-align:center;cursor:pointer;transition:all .2s;position:relative}
-.file-upload:hover{border-color:var(--teal);background:var(--teal-light)}
-.file-upload input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.file-upload .icon{font-size:2rem;margin-bottom:.5rem;color:var(--gray-400)}
-.file-upload .hint{font-size:.8rem;color:var(--gray-400)}
-.file-name{display:inline-block;margin-top:.4rem;font-size:.8rem;color:var(--teal-dark);font-weight:600}
-
-/* ── EMPTY STATE ── */
-.empty-state{text-align:center;padding:3rem 2rem;color:var(--gray-400)}
-.empty-state .icon{font-size:3rem;margin-bottom:1rem}
-.empty-state p{font-size:.9rem;margin-bottom:1rem}
-
-/* ── PORTAL SELECTOR ── */
-.portal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:800px;margin:0 auto}
-.portal-card{background:#fff;border-radius:var(--radius-xl);padding:2.5rem 2rem;text-align:center;border:2px solid var(--gray-200);cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
-.portal-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;transition:height .25s}
-.portal-card.candidate::before{background:var(--teal)}
-.portal-card.company::before{background:var(--navy)}
-.portal-card.admin::before{background:var(--warning)}
-.portal-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:transparent}
-.portal-card.candidate:hover{border-color:var(--teal)}
-.portal-card.company:hover{border-color:var(--navy)}
-.portal-card.admin:hover{border-color:var(--warning)}
-.portal-icon{font-size:2.5rem;margin-bottom:1rem}
-.portal-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
-.portal-card p{font-size:.82rem;color:var(--gray-400)}
-
-/* ── PENDING BADGE ── */
-.pending-overlay{position:absolute;inset:0;background:rgba(255,255,255,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:var(--radius);z-index:5}
-.pending-overlay .icon{font-size:2rem;margin-bottom:.5rem;color:var(--warning)}
-.pending-overlay p{font-size:.9rem;font-weight:600;color:var(--navy);text-align:center;padding:0 1rem}
-
-/* ── RESPONSIVE ── */
-@media(max-width:768px){
-  .dashboard{grid-template-columns:1fr}
-  .sidebar{display:none}
-  .form-row{grid-template-columns:1fr}
-  .portal-grid{grid-template-columns:1fr}
-  .hero-search{flex-direction:column;border-radius:var(--radius);overflow:visible;background:transparent;box-shadow:none;gap:.5rem}
-  .hero-search input,.hero-search button{border-radius:var(--radius-sm)}
-  .hero-search input{background:#fff;box-shadow:var(--shadow-md)}
-  .stats-grid{grid-template-columns:1fr 1fr}
-}
-
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:var(--gray-100)}
-::-webkit-scrollbar-thumb{background:var(--gray-200);border-radius:99px}
-::-webkit-scrollbar-thumb:hover{background:var(--gray-400)}
-
-/* ── JOB DETAIL ── */
-.job-detail-header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:#fff;padding:2rem;border-radius:var(--radius) var(--radius) 0 0}
-.job-detail-body{padding:1.5rem}
-.info-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;font-size:.9rem}
-.info-row .label{color:var(--gray-400);min-width:120px;font-size:.82rem}
-
-/* ── PROFILE ── */
-.profile-banner{height:100px;background:linear-gradient(135deg,var(--teal),var(--navy));border-radius:var(--radius) var(--radius) 0 0}
-.profile-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy-light));display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Sora',sans-serif;font-weight:800;font-size:1.5rem;border:4px solid #fff;margin-top:-36px;margin-left:1.5rem}
-
-/* CANDIDATE APPLICATION STATUS TIMELINE */
-.timeline{position:relative;padding-left:1.5rem}
-.timeline::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--gray-200)}
-.tl-item{position:relative;padding-bottom:1.2rem}
-.tl-item:last-child{padding-bottom:0}
-.tl-dot{position:absolute;left:-1.5rem;top:4px;width:14px;height:14px;border-radius:50%;border:2px solid var(--gray-300);background:#fff}
-.tl-dot.active{border-color:var(--teal);background:var(--teal)}
-.tl-dot.success{border-color:var(--success);background:var(--success)}
-.tl-dot.danger{border-color:var(--danger);background:var(--danger)}
-.tl-label{font-size:.82rem;font-weight:600;color:var(--gray-600)}
-.tl-date{font-size:.75rem;color:var(--gray-400)}
-</style>
-</head>
-<body>
-
-<!-- ═══════════ NAVBAR ═══════════ -->
-<nav id="navbar">
-  <div class="nav-inner">
-    <div class="nav-logo" onclick="goHome()">
-<img src="../images/logo/transparent-logo.png" style="height:140px;width:auto;object-fit:contain" alt="JoBridge">    </div>
-    <div class="nav-links" id="nav-links">
-      <button class="btn btn-ghost" onclick="showPage('home')">Accueil</button>
-      <div id="nav-auth-btns">
-        <button class="btn btn-ghost" onclick="openModal('modal-login')"> Connexion</button>
-        <button class="btn btn-primary" onclick="openModal('modal-register-choice')">S'inscrire</button>
-      </div>
-      <div id="nav-user-btns" class="hidden flex items-center gap-3">
-        <div class="nav-bell" onclick="showNotifications()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#475569"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <div class="badge-count hidden" id="nav-notif-count">0</div>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav id="navbar">
+      <div class="nav-inner">
+        <div class="nav-logo" onclick="goHome()">
+          <img
+            src="../images/logo/transparent-logo.png"
+            style="height: 140px; width: auto; object-fit: contain"
+            alt="JoBridge"
+          />
         </div>
-        <div class="avatar" id="nav-avatar" onclick="openUserDash()">U</div>
-        <button class="btn btn-ghost btn-sm" onclick="logout()">Déconnexion</button>
-      </div>
-    </div>
-  </div>
-</nav>
-
-<!-- ═══════════ PAGE HOME ═══════════ -->
-<div id="page-home" class="page active">
-  <div class="hero">
-    <h1>Trouvez votre prochaine<br><span>opportunité professionnelle</span></h1>
-    <p>JoBridge connecte les meilleurs talents avec les entreprises qui recrutent. Rejoignez des milliers de candidats et d'entreprises.</p>
-    <div class="hero-search">
-      <input type="text" id="home-search" placeholder="Rechercher un poste, une compétence, une entreprise..." oninput="filterHomeJobs()">
-      <button onclick="filterHomeJobs()"> Rechercher</button>
-    </div>
-    <div class="hero-cta">
-      <button class="btn btn-primary" onclick="openModal('modal-register-choice')"> Démarrer gratuitement</button>
-      <button class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.5)" onclick="openModal('modal-login')">Se connecter</button>
-    </div>
-  </div>
-  <div class="hero-stats" id="hero-stats"></div>
-  <div class="section">
-    <h2 class="section-title">Offres d'emploi disponibles</h2>
-    <div class="jobs-grid" id="home-jobs-grid"></div>
-    <div class="empty-state hidden" id="home-empty">
-      <div class="icon">loupe image</div>
-      <p>Aucune offre ne correspond à votre recherche.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════ PAGE CANDIDATE DASH ═══════════ -->
-<div id="page-candidate" class="page">
-  <div class="dashboard">
-    <div class="sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-title">Mon Espace</div>
-        <div class="sidebar-item active" onclick="candidateTab('overview')" id="ctab-overview"><span class="icon">🏠</span> Tableau de bord</div>
-        <div class="sidebar-item" onclick="candidateTab('jobs')" id="ctab-jobs"><span class="icon">📋</span> Offres d'emploi</div>
-        <div class="sidebar-item" onclick="candidateTab('applications')" id="ctab-applications"><span class="icon">📤</span> Mes candidatures</div>
-        <div class="sidebar-item" onclick="candidateTab('notifications')" id="ctab-notifications"><span class="icon">🔔</span> Notifications <span class="notif-dot hidden" id="cnotif-dot"></span></div>
-        <div class="sidebar-item" onclick="candidateTab('profile')" id="ctab-profile"><span class="icon">👤</span> Mon profil</div>
-      </div>
-    </div>
-    <div class="dash-main">
-      <!-- PENDING SCREEN -->
-      <div id="candidate-pending" class="hidden">
-        <div class="card" style="max-width:500px;margin:3rem auto;text-align:center;padding:3rem">
-          <div style="font-size:3rem;margin-bottom:1rem">⏳</div>
-          <h3 style="color:var(--navy);margin-bottom:.7rem">Compte en attente de validation</h3>
-          <p style="color:var(--gray-600);margin-bottom:1.5rem">Votre compte candidat est en cours de validation par notre administrateur. Vous recevrez une notification dès que votre compte sera activé.</p>
-          <div class="badge badge-warning" style="font-size:.9rem;padding:.5rem 1.2rem" id="pending-candidate-id"></div>
+        <div class="nav-links" id="nav-links">
+          <button class="btn btn-ghost" onclick="showPage('home')">
+            Accueil
+          </button>
+          <div id="nav-auth-btns">
+            <button class="btn btn-ghost" onclick="openModal('modal-login')">
+              Connexion
+            </button>
+            <button
+              class="btn btn-primary"
+              onclick="openModal('modal-register-choice')"
+            >
+              S'inscrire
+            </button>
+          </div>
+          <div id="nav-user-btns" class="hidden flex items-center gap-3">
+            <div class="nav-bell" onclick="showNotifications()">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                color="#475569"
+              >
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
+              <div class="badge-count hidden" id="nav-notif-count">0</div>
+            </div>
+            <div class="avatar" id="nav-avatar" onclick="openUserDash()">U</div>
+            <button class="btn btn-ghost btn-sm" onclick="logout()">
+              Déconnexion
+            </button>
+          </div>
         </div>
       </div>
-      <!-- TABS CONTENT -->
-      <div id="candidate-dash-content">
-        <!-- Overview -->
-        <div id="c-overview">
-          <h2 style="color:var(--navy);margin-bottom:1.5rem">Bonjour, <span id="c-name">Candidat</span></h2>
-          <div class="stats-grid">
-            <div class="stat-box teal">
-              <div class="label">Candidatures envoyées</div>
-              <div class="value" id="c-stat-apps">0</div>
-              <div class="sub">Total</div>
+    </nav>
+
+    <!-- PAGE HOME -->
+    <div id="page-home" class="page active">
+      <div class="hero">
+        <h1>
+          Trouvez votre prochaine<br /><span>opportunité professionnelle</span>
+        </h1>
+        <p>
+          JoBridge connecte les meilleurs talents avec les entreprises qui
+          recrutent.
+        </p>
+        <div class="hero-search">
+          <input
+            type="text"
+            id="home-search"
+            placeholder="Rechercher un poste, une compétence, une entreprise..."
+            oninput="filterHomeJobs()"
+          />
+          <button onclick="filterHomeJobs()">Rechercher</button>
+        </div>
+        <div class="hero-cta">
+          <button
+            class="btn btn-primary"
+            onclick="openModal('modal-register-choice')"
+          >
+            Démarrer gratuitement
+          </button>
+          <button
+            class="btn btn-outline"
+            style="color: #fff; border-color: rgba(255, 255, 255, 0.5)"
+            onclick="openModal('modal-login')"
+          >
+            Se connecter
+          </button>
+        </div>
+      </div>
+      <div class="hero-stats" id="hero-stats"></div>
+      <div class="section">
+        <h2 class="section-title">Offres d'emploi disponibles</h2>
+        <div class="jobs-grid" id="home-jobs-grid"></div>
+        <div class="empty-state hidden" id="home-empty">
+          <img
+            src="../images/icons/loupe.png"
+            style="height: 50px; width: auto; object-fit: contain"
+            alt="JoBridge"
+          />
+          <p>Aucune offre ne correspond à votre recherche.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE CANDIDATE -->
+    <div id="page-candidate" class="page">
+      <div class="dashboard">
+        <div class="sidebar">
+          <div class="sidebar-section">
+            <div class="sidebar-title">Mon Espace</div>
+            <div
+              class="sidebar-item active"
+              onclick="candidateTab('overview')"
+              id="ctab-overview"
+            >
+              <img
+                src="../images/icons/home.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Tableau de bord
             </div>
-            <div class="stat-box navy">
-              <div class="label">En attente</div>
-              <div class="value" id="c-stat-pending">0</div>
-              <div class="sub">Réponse attendue</div>
+            <div
+              class="sidebar-item"
+              onclick="candidateTab('jobs')"
+              id="ctab-jobs"
+            >
+              <img
+                src="../images/icons/offre.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Offres d'emploi
             </div>
-            <div class="stat-box success">
-              <div class="label">Acceptées</div>
-              <div class="value" id="c-stat-ok">0</div>
-              <div class="sub">Félicitations!</div>
+            <div
+              class="sidebar-item"
+              onclick="candidateTab('applications')"
+              id="ctab-applications"
+            >
+              <img
+                src="../images/icons/arrow-up.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Mes candidatures
             </div>
-            <div class="stat-box danger">
-              <div class="label">Non retenues</div>
-              <div class="value" id="c-stat-rej">0</div>
+            <div
+              class="sidebar-item"
+              onclick="candidateTab('notifications')"
+              id="ctab-notifications"
+            >
+              <img
+                src="../images/icons/notification.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Notifications
+              <span class="notif-count-badge hidden" id="c-notif-badge">0</span>
+            </div>
+            <div
+              class="sidebar-item"
+              onclick="candidateTab('profile')"
+              id="ctab-profile"
+            >
+              <img
+                src="../images/icons/candidate1.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Mon profil
             </div>
           </div>
-          <div class="card">
-            <div class="card-header"><span style="font-weight:700;color:var(--navy)">🆔 Mon Identifiant Candidat</span></div>
-            <div class="card-body">
-              <div style="display:flex;align-items:center;gap:1rem">
-                <div style="background:var(--teal-light);border:2px dashed var(--teal);border-radius:var(--radius);padding:1rem 2rem;font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:800;color:var(--teal-dark)" id="c-id-display">---</div>
-                <p class="text-sm text-gray">Utilisez cet identifiant pour postuler aux offres d'emploi.</p>
+        </div>
+        <div class="dash-main">
+          <div id="candidate-pending" class="hidden">
+            <div
+              class="card"
+              style="
+                max-width: 500px;
+                margin: 3rem auto;
+                text-align: center;
+                padding: 3rem;
+              "
+            >
+              <div style="font-size: 3rem; margin-bottom: 1rem"></div>
+              <h3 style="color: var(--navy); margin-bottom: 0.7rem">
+                Compte en attente de validation
+              </h3>
+              <p style="color: var(--gray-600); margin-bottom: 1.5rem">
+                Votre compte est en cours de validation. Vous serez notifié dès
+                activation.
+              </p>
+              <div
+                class="badge badge-warning"
+                style="font-size: 0.9rem; padding: 0.5rem 1.2rem"
+                id="pending-candidate-id"
+              ></div>
+            </div>
+          </div>
+          <div id="candidate-dash-content">
+            <!-- Overview -->
+            <div id="c-overview">
+              <h2 style="color: var(--navy); margin-bottom: 1.5rem">
+                Bonjour, <span id="c-name">Candidat</span>
+              </h2>
+              <div class="stats-grid">
+                <div class="stat-box teal">
+                  <div class="label">Candidatures</div>
+                  <div class="value" id="c-stat-apps">0</div>
+                </div>
+                <div class="stat-box navy">
+                  <div class="label">En attente</div>
+                  <div class="value" id="c-stat-pending">0</div>
+                </div>
+                <div class="stat-box success">
+                  <div class="label">Acceptées</div>
+                  <div class="value" id="c-stat-ok">0</div>
+                </div>
+                <div class="stat-box danger">
+                  <div class="label">Non retenues</div>
+                  <div class="value" id="c-stat-rej">0</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <span style="font-weight: 700; color: var(--navy)"
+                    ><img
+                      src="../images/icons/id.png"
+                      style="
+                        width: 18px;
+                        height: 18px;
+                        object-fit: contain;
+                        vertical-align: middle;
+                        margin-right: 6px;
+                      "
+                    />Mon Identifiant Candidat</span
+                  >
+                </div>
+                <div class="card-body">
+                  <div style="display: flex; align-items: center; gap: 1rem">
+                    <div
+                      style="
+                        background: var(--teal-light);
+                        border: 2px dashed var(--teal);
+                        border-radius: var(--radius);
+                        padding: 1rem 2rem;
+                        font-family: &quot;Sora&quot;, sans-serif;
+                        font-size: 1.5rem;
+                        font-weight: 800;
+                        color: var(--teal-dark);
+                      "
+                      id="c-id-display"
+                    >
+                      ---
+                    </div>
+                    <p class="text-sm text-gray">
+                      Utilisez cet identifiant pour postuler.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Jobs -->
+            <div id="c-jobs" class="hidden">
+              <div class="flex justify-between items-center mb-4">
+                <h2 style="color: var(--navy)"> Offres disponibles</h2>
+                <div class="input-with-icon">
+                  <span class="icon"></span>
+                  <input
+                    class="form-control"
+                    style="width: 260px"
+                    placeholder="Rechercher..."
+                    id="c-job-search"
+                    oninput="filterCandidateJobs()"
+                  />
+                </div>
+              </div>
+              <div class="jobs-grid" id="c-jobs-grid"></div>
+            </div>
+            <!-- Applications -->
+            <div id="c-applications" class="hidden">
+              <h2 style="color: var(--navy); margin-bottom: 1.5rem">
+                Mes candidatures
+              </h2>
+              <div id="c-apps-list"></div>
+            </div>
+            <!-- Notifications -->
+            <div id="c-notifications" class="hidden">
+              <div class="flex justify-between items-center mb-4">
+                <h2 style="color: var(--navy)"> Mes notifications</h2>
+                <button
+                  class="btn btn-ghost btn-sm"
+                  onclick="markAllReadCandidate()"
+                >
+                  Tout marquer lu
+                </button>
+              </div>
+              <div id="c-notifs-list"></div>
+            </div>
+            <!-- Profile -->
+            <div id="c-profile" class="hidden">
+              <h2 style="color: var(--navy); margin-bottom: 1.5rem">
+                 Mon profil
+              </h2>
+              <div class="card" style="max-width: 560px">
+                <div class="profile-banner"></div>
+                <div class="profile-avatar" id="c-profile-avatar">C</div>
+                <div class="card-body" style="margin-top: 1rem">
+                  <div id="c-profile-details"></div>
+                </div>
+              </div>
+              <!-- Danger zone candidat -->
+              <div class="danger-zone" style="max-width: 560px">
+                <h4> Zone de danger</h4>
+                <p>
+                  La suppression de votre compte est irréversible. Toutes vos
+                  candidatures seront marquées comme abandonnées.
+                </p>
+                <button
+                  class="btn btn-danger btn-sm"
+                  onclick="openDeleteAccountModal('candidate')"
+                >
+                  Supprimer mon compte
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <!-- Jobs Tab -->
-        <div id="c-jobs" class="hidden">
-          <div class="flex justify-between items-center mb-4">
-            <h2 style="color:var(--navy)">📋 Offres disponibles</h2>
-            <div class="input-with-icon">
-              <span class="icon">🔍</span>
-              <input class="form-control" style="width:260px" placeholder="Rechercher..." id="c-job-search" oninput="filterCandidateJobs()">
-            </div>
-          </div>
-          <div class="jobs-grid" id="c-jobs-grid"></div>
-        </div>
-        <!-- Applications Tab -->
-        <div id="c-applications" class="hidden">
-          <h2 style="color:var(--navy);margin-bottom:1.5rem">📤 Mes candidatures</h2>
-          <div id="c-apps-list"></div>
-        </div>
-        <!-- Notifications Tab -->
-        <div id="c-notifications" class="hidden">
-          <h2 style="color:var(--navy);margin-bottom:1.5rem">🔔 Mes notifications</h2>
-          <div id="c-notifs-list"></div>
-        </div>
-        <!-- Profile Tab -->
-        <div id="c-profile" class="hidden">
-          <h2 style="color:var(--navy);margin-bottom:1.5rem">👤 Mon profil</h2>
-          <div class="card" style="max-width:560px">
-            <div class="profile-banner"></div>
-            <div class="profile-avatar" id="c-profile-avatar">C</div>
-            <div class="card-body" style="margin-top:1rem">
-              <div id="c-profile-details"></div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- ═══════════ PAGE COMPANY DASH ═══════════ -->
-<div id="page-company" class="page">
-  <div class="dashboard">
-    <div class="sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-title">Mon Espace</div>
-        <div class="sidebar-item active" onclick="companyTab('overview')" id="entab-overview"><span class="icon">🏠</span> Tableau de bord</div>
-        <div class="sidebar-item" onclick="companyTab('offers')" id="entab-offers"><span class="icon">💼</span> Mes offres</div>
-        <div class="sidebar-item" onclick="companyTab('applications')" id="entab-applications"><span class="icon">👥</span> Candidatures reçues</div>
-        <div class="sidebar-item" onclick="companyTab('notifications')" id="entab-notifications"><span class="icon">🔔</span> Notifications <span class="notif-dot hidden" id="enotif-dot"></span></div>
-        <div class="sidebar-item" onclick="companyTab('profile')" id="entab-profile"><span class="icon">🏢</span> Mon entreprise</div>
-      </div>
-    </div>
-    <div class="dash-main">
-      <div id="company-pending" class="hidden">
-        <div class="card" style="max-width:500px;margin:3rem auto;text-align:center;padding:3rem">
-          <div style="font-size:3rem;margin-bottom:1rem">⏳</div>
-          <h3 style="color:var(--navy);margin-bottom:.7rem">Compte en attente de validation</h3>
-          <p style="color:var(--gray-600)">Votre compte entreprise est en cours de validation par notre administrateur. Vous pourrez publier des offres dès validation.</p>
-        </div>
-      </div>
-      <div id="company-dash-content">
-        <!-- Overview -->
-        <div id="en-overview">
-          <h2 style="color:var(--navy);margin-bottom:1.5rem">Bienvenue, <span id="en-name">Entreprise</span> 🏢</h2>
-          <div class="stats-grid">
-            <div class="stat-box teal"><div class="label">Offres publiées</div><div class="value" id="en-stat-offers">0</div></div>
-            <div class="stat-box navy"><div class="label">Candidatures reçues</div><div class="value" id="en-stat-apps">0</div></div>
-            <div class="stat-box success"><div class="label">Candidats acceptés</div><div class="value" id="en-stat-ok">0</div></div>
-            <div class="stat-box danger"><div class="label">Rejetés</div><div class="value" id="en-stat-rej">0</div></div>
-          </div>
-        </div>
-        <!-- Offers -->
-        <div id="en-offers" class="hidden">
-          <div class="flex justify-between items-center mb-4">
-            <h2 style="color:var(--navy)">💼 Mes offres d'emploi</h2>
-            <button class="btn btn-primary" onclick="openModal('modal-new-offer')">➕ Nouvelle offre</button>
-          </div>
-          <div id="en-offers-list"></div>
-        </div>
-        <!-- Applications -->
-        <div id="en-applications" class="hidden">
-          <h2 style="color:var(--navy);margin-bottom:1.5rem">👥 Candidatures reçues</h2>
-          <div id="en-apps-list"></div>
-        </div>
-        <!-- Notifications -->
-        <div id="en-notifications" class="hidden">
-          <h2 style="color:var(--navy);margin-bottom:1.5rem">🔔 Mes notifications</h2>
-          <div id="en-notifs-list"></div>
-        </div>
-        <!-- Profile -->
-        <div id="en-profile" class="hidden">
-          <h2 style="color:var(--navy);margin-bottom:1.5rem">🏢 Mon entreprise</h2>
-          <div class="card" style="max-width:560px">
-            <div class="profile-banner" style="background:linear-gradient(135deg,var(--navy),var(--navy-light))"></div>
-            <div class="profile-avatar" id="en-profile-avatar" style="background:linear-gradient(135deg,var(--navy),var(--navy-light))">E</div>
-            <div class="card-body" style="margin-top:1rem">
-              <div id="en-profile-details"></div>
+    <!-- PAGE COMPANY -->
+    <div id="page-company" class="page">
+      <div class="dashboard">
+        <div class="sidebar">
+          <div class="sidebar-section">
+            <div class="sidebar-title">Mon Espace</div>
+            <div
+              class="sidebar-item active"
+              onclick="companyTab('overview')"
+              id="entab-overview"
+            >
+              <img
+                src="../images/icons/home.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Tableau de bord
+            </div>
+            <div
+              class="sidebar-item"
+              onclick="companyTab('offers')"
+              id="entab-offers"
+            >
+              <img
+                src="../images/icons/offre.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Mes offres
+            </div>
+            <div
+              class="sidebar-item"
+              onclick="companyTab('applications')"
+              id="entab-applications"
+            >
+              <img
+                src="../images/icons/candidate.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Candidatures reçues
+            </div>
+            <div
+              class="sidebar-item"
+              onclick="companyTab('notifications')"
+              id="entab-notifications"
+            >
+              <img
+                src="../images/icons/notification.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Notifications
+              <span class="notif-count-badge hidden" id="en-notif-badge"
+                >0</span
+              >
+            </div>
+            <div
+              class="sidebar-item"
+              onclick="companyTab('profile')"
+              id="entab-profile"
+            >
+              <img
+                src="../images/icons/entreprise.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Mon entreprise
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════ PAGE ADMIN DASH ═══════════ -->
-<div id="page-admin" class="page">
-  <div class="dashboard">
-    <div class="sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-title">Administration</div>
-        <div class="sidebar-item active" onclick="adminTab('overview')" id="atab-overview"><span class="icon">📊</span> Vue d'ensemble</div>
-        <div class="sidebar-item" onclick="adminTab('candidates')" id="atab-candidates"><span class="icon">👤</span> Candidats</div>
-        <div class="sidebar-item" onclick="adminTab('companies')" id="atab-companies"><span class="icon">🏢</span> Entreprises</div>
-        <div class="sidebar-item" onclick="adminTab('offers')" id="atab-offers"><span class="icon">💼</span> Offres</div>
-      </div>
-    </div>
-    <div class="dash-main">
-      <!-- Overview -->
-      <div id="a-overview">
-        <h2 style="color:var(--navy);margin-bottom:1.5rem">📊 Tableau de bord Admin</h2>
-        <div class="stats-grid" id="admin-stats-grid"></div>
-      </div>
-      <!-- Candidates -->
-      <div id="a-candidates" class="hidden">
-        <div class="flex justify-between items-center mb-4">
-          <h2 style="color:var(--navy)">👤 Gestion des candidats</h2>
-          <div class="flex gap-2">
-            <button class="btn btn-ghost btn-sm" onclick="filterAdminUsers('all','candidate')">Tous</button>
-            <button class="btn btn-ghost btn-sm" onclick="filterAdminUsers('pending','candidate')">En attente</button>
-            <button class="btn btn-ghost btn-sm" onclick="filterAdminUsers('validated','candidate')">Validés</button>
+        <div class="dash-main">
+          <div id="company-pending" class="hidden">
+            <div
+              class="card"
+              style="
+                max-width: 500px;
+                margin: 3rem auto;
+                text-align: center;
+                padding: 3rem;
+              "
+            >
+              <div style="font-size: 3rem; margin-bottom: 1rem"></div>
+              <h3 style="color: var(--navy); margin-bottom: 0.7rem">
+                Compte en attente de validation
+              </h3>
+              <p style="color: var(--gray-600)">
+                Votre compte entreprise sera validé prochainement.
+              </p>
+            </div>
+          </div>
+          <div id="company-dash-content">
+            <div id="en-overview">
+              <h2 style="color: var(--navy); margin-bottom: 1.5rem">
+                Bienvenue, <span id="en-name">Entreprise</span> 
+              </h2>
+              <div class="stats-grid">
+                <div class="stat-box teal">
+                  <div class="label">Offres publiées</div>
+                  <div class="value" id="en-stat-offers">0</div>
+                </div>
+                <div class="stat-box navy">
+                  <div class="label">Candidatures reçues</div>
+                  <div class="value" id="en-stat-apps">0</div>
+                </div>
+                <div class="stat-box success">
+                  <div class="label">Acceptés</div>
+                  <div class="value" id="en-stat-ok">0</div>
+                </div>
+                <div class="stat-box danger">
+                  <div class="label">Rejetés</div>
+                  <div class="value" id="en-stat-rej">0</div>
+                </div>
+              </div>
+            </div>
+            <div id="en-offers" class="hidden">
+              <div class="flex justify-between items-center mb-4">
+                <h2 style="color: var(--navy)"> Mes offres d'emploi</h2>
+                <button
+                  class="btn btn-primary"
+                  onclick="openModal('modal-new-offer')"
+                >
+                  <img
+                    src="../images/icons/add.png"
+                    style="width: 16px; height: 16px; object-fit: contain"
+                  />
+                  Nouvelle offre
+                </button>
+              </div>
+              <div id="en-offers-list"></div>
+            </div>
+            <div id="en-applications" class="hidden">
+              <h2 style="color: var(--navy); margin-bottom: 1.5rem">
+                Candidatures reçues
+              </h2>
+              <div id="en-apps-list"></div>
+            </div>
+            <div id="en-notifications" class="hidden">
+              <div class="flex justify-between items-center mb-4">
+                <h2 style="color: var(--navy)"> Mes notifications</h2>
+                <button
+                  class="btn btn-ghost btn-sm"
+                  onclick="markAllReadCompany()"
+                >
+                  Tout marquer lu
+                </button>
+              </div>
+              <div id="en-notifs-list"></div>
+            </div>
+            <div id="en-profile" class="hidden">
+              <h2 style="color: var(--navy); margin-bottom: 1.5rem">
+                Mon entreprise
+              </h2>
+              <div class="card" style="max-width: 560px">
+                <div
+                  class="profile-banner"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      var(--navy),
+                      var(--navy-light)
+                    );
+                  "
+                ></div>
+                <div
+                  class="profile-avatar"
+                  id="en-profile-avatar"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      var(--navy),
+                      var(--navy-light)
+                    );
+                  "
+                >
+                  E
+                </div>
+                <div class="card-body" style="margin-top: 1rem">
+                  <div id="en-profile-details"></div>
+                </div>
+              </div>
+              <div class="danger-zone" style="max-width: 560px">
+                <h4> Zone de danger</h4>
+                <p>
+                  La suppression de votre compte supprimera aussi toutes vos
+                  offres et les candidatures associées.
+                </p>
+                <button
+                  class="btn btn-danger btn-sm"
+                  onclick="openDeleteAccountModal('company')"
+                >
+                  Supprimer mon compte
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="table-wrap"><table><thead><tr><th>ID</th><th>Nom</th><th>Email</th><th>Statut</th><th>Actions</th></tr></thead><tbody id="admin-candidates-table"></tbody></table></div>
       </div>
-      <!-- Companies -->
-      <div id="a-companies" class="hidden">
-        <div class="flex justify-between items-center mb-4">
-          <h2 style="color:var(--navy)">🏢 Gestion des entreprises</h2>
-          <div class="flex gap-2">
-            <button class="btn btn-ghost btn-sm" onclick="filterAdminUsers('all','company')">Tous</button>
-            <button class="btn btn-ghost btn-sm" onclick="filterAdminUsers('pending','company')">En attente</button>
-            <button class="btn btn-ghost btn-sm" onclick="filterAdminUsers('validated','company')">Validés</button>
+    </div>
+
+    <!-- PAGE ADMIN -->
+    <div id="page-admin" class="page">
+      <div class="dashboard">
+        <div class="sidebar">
+          <div class="sidebar-section">
+            <div class="sidebar-title">Administration</div>
+            <div
+              class="sidebar-item active"
+              onclick="adminTab('overview')"
+              id="atab-overview"
+            >
+              <img
+                src="../images/icons/vue.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Vue d'ensemble
+            </div>
+            <div
+              class="sidebar-item"
+              onclick="adminTab('candidates')"
+              id="atab-candidates"
+            >
+              <img
+                src="../images/icons/candidate.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Candidats
+            </div>
+            <div
+              class="sidebar-item"
+              onclick="adminTab('companies')"
+              id="atab-companies"
+            >
+              <img
+                src="../images/icons/entreprise.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Entreprises
+            </div>
+            <div
+              class="sidebar-item"
+              onclick="adminTab('offers')"
+              id="atab-offers"
+            >
+              <img
+                src="../images/icons/offre.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Offres
+            </div>
+            <div
+              class="sidebar-item"
+              onclick="adminTab('deleted')"
+              id="atab-deleted"
+            >
+              <img
+                src="../images/icons/supprime.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Comptes supprimés
+            </div>
+            <div
+              class="sidebar-item"
+              onclick="adminTab('notifications')"
+              id="atab-notifications"
+            >
+              <img
+                src="../images/icons/notification.png"
+                style="width: 18px; height: 18px; object-fit: contain"
+              />
+              Notifications
+              <span class="notif-count-badge hidden" id="admin-notif-badge"
+                >0</span
+              >
+            </div>
           </div>
         </div>
-        <div class="table-wrap"><table><thead><tr><th>ID</th><th>Entreprise</th><th>Email</th><th>Secteur</th><th>Statut</th><th>Actions</th></tr></thead><tbody id="admin-companies-table"></tbody></table></div>
-      </div>
-      <!-- Offers -->
-      <div id="a-offers" class="hidden">
-        <h2 style="color:var(--navy);margin-bottom:1.5rem">💼 Toutes les offres</h2>
-        <div class="table-wrap"><table><thead><tr><th>Titre</th><th>Entreprise</th><th>Secteur</th><th>Type</th><th>Candidatures</th><th>Date</th></tr></thead><tbody id="admin-offers-table"></tbody></table></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════ MODALS ═══════════ -->
-
-<!-- Login -->
-<div class="modal-overlay hidden" id="modal-login">
-  <div class="modal">
-    <div class="modal-header">
-      <h3> Connexion</h3>
-      <button class="close-btn" onclick="closeModal('modal-login')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div id="login-alert"></div>
-      <div class="form-group">
-        <label>Email</label>
-        <input class="form-control" type="email" id="login-email" placeholder="votre@email.com">
-      </div>
-      <div class="form-group">
-        <label>Mot de passe</label>
-        <input class="form-control" type="password" id="login-password" placeholder="••••••••">
-      </div>
-      
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-login')">Annuler</button>
-      <button class="btn btn-primary" onclick="doLogin()">Se connecter</button>
-    </div>
-  </div>
-</div>
-
-<!-- Register choice -->
-<div class="modal-overlay hidden" id="modal-register-choice">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h3> Créer un compte</h3>
-      <button class="close-btn" onclick="closeModal('modal-register-choice')">✕</button>
-    </div>
-    <div class="modal-body">
-      <p style="text-align:center;color:var(--gray-600);margin-bottom:1.5rem">Je suis un(e)...</p>
-      <div class="portal-grid">
-        <div class="portal-card candidate" onclick="openRegister('candidate')">
-          <div class="portal-icon">👤</div>
-          <h3>Candidat</h3>
-          <p>Je cherche un emploi</p>
-        </div>
-        <div class="portal-card company" onclick="openRegister('company')">
-          <div class="portal-icon">🏢</div>
-          <h3>Entreprise</h3>
-          <p>Je recrute des talents</p>
-        </div>
-        <div class="portal-card admin" onclick="openRegister('admin')" style="opacity:.4;cursor:not-allowed" title="Accès réservé">
-          <div class="portal-icon">🔑</div>
-          <h3>Admin</h3>
-          <p>Accès restreint</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Register Candidate -->
-<div class="modal-overlay hidden" id="modal-register-candidate">
-  <div class="modal">
-    <div class="modal-header">
-      <h3>👤 Inscription Candidat</h3>
-      <button class="close-btn" onclick="closeModal('modal-register-candidate')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div id="reg-c-alert"></div>
-      <div class="form-row">
-        <div class="form-group"><label>Prénom</label><input class="form-control" id="rc-prenom" placeholder="Marie"></div>
-        <div class="form-group"><label>Nom</label><input class="form-control" id="rc-nom" placeholder="Dupont"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input class="form-control" type="email" id="rc-email" placeholder="marie@email.com"></div>
-      <div class="form-group"><label>Mot de passe</label><input class="form-control" type="password" id="rc-pwd" placeholder="Min. 8 caractères"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-register-candidate')">Annuler</button>
-      <button class="btn btn-primary" onclick="registerCandidate()">S'inscrire</button>
-    </div>
-  </div>
-</div>
-
-<!-- Register Company -->
-<div class="modal-overlay hidden" id="modal-register-company">
-  <div class="modal">
-    <div class="modal-header">
-      <h3>🏢 Inscription Entreprise</h3>
-      <button class="close-btn" onclick="closeModal('modal-register-company')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div id="reg-e-alert"></div>
-      <div class="form-group"><label>Nom de l'entreprise</label><input class="form-control" id="re-name" placeholder="Acme Corp"></div>
-      <div class="form-group"><label>Email professionnel</label><input class="form-control" type="email" id="re-email" placeholder="rh@acme.com"></div>
-      <div class="form-group"><label>Mot de passe</label><input class="form-control" type="password" id="re-pwd" placeholder="Min. 8 caractères"></div>
-      <div class="form-group"><label>Secteur d'activité</label>
-        <select class="form-control" id="re-secteur">
-          <option value="">Choisir un secteur...</option>
-          <option>Technologie & Informatique</option>
-          <option>Finance & Banque</option>
-          <option>Santé & Médical</option>
-          <option>Éducation & Formation</option>
-          <option>Commerce & Distribution</option>
-          <option>Industrie & Manufacturing</option>
-          <option>Marketing & Communication</option>
-          <option>Ressources Humaines</option>
-          <option>Transport & Logistique</option>
-          <option>Immobilier & Construction</option>
-          <option>Autre</option>
-        </select>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-register-company')">Annuler</button>
-      <button class="btn btn-primary" onclick="registerCompany()">S'inscrire</button>
-    </div>
-  </div>
-</div>
-
-<!-- New Offer -->
-<div class="modal-overlay hidden" id="modal-new-offer">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h3>➕ Publier une offre d'emploi</h3>
-      <button class="close-btn" onclick="closeModal('modal-new-offer')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div id="offer-alert"></div>
-      <div class="form-row">
-        <div class="form-group"><label>Titre du poste</label><input class="form-control" id="off-title" placeholder="Développeur Full Stack"></div>
-        <div class="form-group"><label>Type de contrat</label>
-          <select class="form-control" id="off-type">
-            <option>CDI</option><option>CDD</option><option>Stage</option><option>Alternance</option><option>Freelance</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Localisation</label><input class="form-control" id="off-location" placeholder="Paris, France"></div>
-        <div class="form-group"><label>Salaire (optionnel)</label><input class="form-control" id="off-salary" placeholder="45 000 – 55 000 €/an"></div>
-      </div>
-      <div class="form-group"><label>Description du poste</label><textarea class="form-control" id="off-desc" placeholder="Décrivez le poste, les missions, les compétences requises..."></textarea></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-new-offer')">Annuler</button>
-      <button class="btn btn-primary" onclick="publishOffer()">📤 Publier l'offre</button>
-    </div>
-  </div>
-</div>
-
-<!-- Apply Job -->
-<div class="modal-overlay hidden" id="modal-apply">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h3>📤 Postuler à l'offre</h3>
-      <button class="close-btn" onclick="closeModal('modal-apply')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div id="apply-offer-info" class="card" style="margin-bottom:1.2rem;background:var(--gray-50)">
-        <div class="card-body" style="padding:1rem"></div>
-      </div>
-      <div id="apply-alert"></div>
-      <div class="form-group"><label>Votre ID Candidat</label><input class="form-control" id="apply-id" placeholder="CAN-xxxx" readonly></div>
-      <div class="form-group"><label>Lettre de motivation</label><textarea class="form-control" id="apply-letter" style="min-height:140px" placeholder="Madame, Monsieur,&#10;..."></textarea></div>
-      <div class="form-group"><label>CV (PDF)</label>
-        <div class="file-upload">
-          <input type="file" id="apply-cv" accept=".pdf,.doc,.docx" onchange="handleFileUpload('apply-cv','apply-cv-name')">
-          <div class="icon">📄</div>
-          <div>Glissez votre CV ici ou cliquez pour choisir</div>
-          <div class="hint">PDF, DOC – Max 5 Mo</div>
-          <div class="file-name hidden" id="apply-cv-name"></div>
+        <div class="dash-main">
+          <div id="a-overview">
+            <h2 style="color: var(--navy); margin-bottom: 1.5rem">
+               Tableau de bord Admin
+            </h2>
+            <div class="stats-grid" id="admin-stats-grid"></div>
+          </div>
+          <div id="a-candidates" class="hidden">
+            <div class="flex justify-between items-center mb-4">
+              <h2 style="color: var(--navy)"> Gestion des candidats</h2>
+              <div class="flex gap-2">
+                <button
+                  class="btn btn-ghost btn-sm"
+                  onclick="filterAdminUsers('all', 'candidate')"
+                >
+                  Tous
+                </button>
+                <button
+                  class="btn btn-ghost btn-sm"
+                  onclick="filterAdminUsers('pending', 'candidate')"
+                >
+                  En attente
+                </button>
+                <button
+                  class="btn btn-ghost btn-sm"
+                  onclick="filterAdminUsers('validated', 'candidate')"
+                >
+                  Validés
+                </button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-candidates-table"></tbody>
+              </table>
+            </div>
+          </div>
+          <div id="a-companies" class="hidden">
+            <div class="flex justify-between items-center mb-4">
+              <h2 style="color: var(--navy)"> Gestion des entreprises</h2>
+              <div class="flex gap-2">
+                <button
+                  class="btn btn-ghost btn-sm"
+                  onclick="filterAdminUsers('all', 'company')"
+                >
+                  Tous
+                </button>
+                <button
+                  class="btn btn-ghost btn-sm"
+                  onclick="filterAdminUsers('pending', 'company')"
+                >
+                  En attente
+                </button>
+                <button
+                  class="btn btn-ghost btn-sm"
+                  onclick="filterAdminUsers('validated', 'company')"
+                >
+                  Validés
+                </button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Entreprise</th>
+                    <th>Email</th>
+                    <th>Secteur</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-companies-table"></tbody>
+              </table>
+            </div>
+          </div>
+          <div id="a-offers" class="hidden">
+            <h2 style="color: var(--navy); margin-bottom: 1.5rem">
+               Toutes les offres
+            </h2>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Titre</th>
+                    <th>Entreprise</th>
+                    <th>Secteur</th>
+                    <th>Type</th>
+                    <th>Lieu</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-offers-table"></tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Comptes supprimés -->
+          <div id="a-deleted" class="hidden">
+            <h2 style="color: var(--navy); margin-bottom: 1.5rem">
+              Comptes supprimés
+            </h2>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>ID</th>
+                    <th>Supprimé par</th>
+                    <th>Motif</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-deleted-table"></tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Notifications admin -->
+          <div id="a-notifications" class="hidden">
+            <div class="flex justify-between items-center mb-4">
+              <h2 style="color: var(--navy)"> Notifications</h2>
+              <button class="btn btn-ghost btn-sm" onclick="markAllReadAdmin()">
+                 Tout marquer lu
+              </button>
+            </div>
+            <div id="admin-notifs-list"></div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-apply')">Annuler</button>
-      <button class="btn btn-primary" onclick="submitApplication()">🚀 Envoyer ma candidature</button>
+
+    <!-- ═══ MODALS ═══ -->
+
+    <!-- Login -->
+    <div class="modal-overlay hidden" id="modal-login">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Connexion</h3>
+          <button class="close-btn" onclick="closeModal('modal-login')">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="login-alert"></div>
+          <div class="form-group">
+            <label>Email</label
+            ><input
+              class="form-control"
+              type="email"
+              id="login-email"
+              placeholder="votre@email.com"
+            />
+          </div>
+          <div class="form-group">
+            <label>Mot de passe</label
+            ><input
+              class="form-control"
+              type="password"
+              id="login-password"
+              placeholder="••••••••"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal('modal-login')">
+            Annuler
+          </button>
+          <button class="btn btn-primary" onclick="doLogin()">
+            Se connecter
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- Job Detail -->
-<div class="modal-overlay hidden" id="modal-job-detail">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h3>💼 Détail de l'offre</h3>
-      <button class="close-btn" onclick="closeModal('modal-job-detail')">✕</button>
+    <!-- Register choice -->
+    <div class="modal-overlay hidden" id="modal-register-choice">
+      <div class="modal modal-lg">
+        <div class="modal-header">
+          <h3>Créer un compte</h3>
+          <button
+            class="close-btn"
+            onclick="closeModal('modal-register-choice')"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <p
+            style="
+              text-align: center;
+              color: var(--gray-600);
+              margin-bottom: 1.5rem;
+            "
+          >
+            Je suis un(e)...
+          </p>
+          <div class="portal-grid">
+            <div
+              class="portal-card candidate"
+              onclick="openRegister('candidate')"
+            >
+              <div class="portal-icon">
+                <img
+                  src="../images/icons/candidate.png"
+                  style="width: 48px; height: 48px; object-fit: contain"
+                />
+              </div>
+              <h3>Candidat</h3>
+              <p>Je cherche un emploi</p>
+            </div>
+
+            <div class="portal-card company" onclick="openRegister('company')">
+              <div class="portal-icon">
+                <img
+                  src="../images/icons/entreprise.png"
+                  style="width: 48px; height: 48px; object-fit: contain"
+                />
+              </div>
+              <h3>Entreprise</h3>
+              <p>Je recrute des talents</p>
+            </div>
+            <div
+              class="portal-card admin"
+              onclick="openRegister('admin')"
+              style="opacity: 0.4; cursor: not-allowed"
+            >
+              <div class="portal-icon">
+                <img
+                  src="../images/icons/admin.png"
+                  style="width: 48px; height: 48px; object-fit: contain"
+                />
+              </div>
+              <h3>Admin</h3>
+              <p>Accès restreint</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div id="modal-job-detail-body" class="modal-body"></div>
-    <div class="modal-footer" id="modal-job-detail-footer"></div>
-  </div>
-</div>
 
-<!-- Application Detail (company view) -->
-<div class="modal-overlay hidden" id="modal-app-detail">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h3>👤 Candidature</h3>
-      <button class="close-btn" onclick="closeModal('modal-app-detail')">✕</button>
+    <!-- Register Candidate -->
+    <div class="modal-overlay hidden" id="modal-register-candidate">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Inscription Candidat</h3>
+          <button
+            class="close-btn"
+            onclick="closeModal('modal-register-candidate')"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="reg-c-alert"></div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Prénom</label
+              ><input class="form-control" id="rc-prenom" placeholder="Marie" />
+            </div>
+            <div class="form-group">
+              <label>Nom</label
+              ><input class="form-control" id="rc-nom" placeholder="Dupont" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label
+            ><input
+              class="form-control"
+              type="email"
+              id="rc-email"
+              placeholder="marie@email.com"
+            />
+          </div>
+          <div class="form-group">
+            <label>Mot de passe</label
+            ><input
+              class="form-control"
+              type="password"
+              id="rc-pwd"
+              placeholder="Min. 6 caractères"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-ghost"
+            onclick="closeModal('modal-register-candidate')"
+          >
+            Annuler
+          </button>
+          <button class="btn btn-primary" onclick="registerCandidate()">
+            S'inscrire
+          </button>
+        </div>
+      </div>
     </div>
-    <div id="modal-app-detail-body" class="modal-body"></div>
-    <div class="modal-footer" id="modal-app-detail-footer"></div>
-  </div>
-</div>
 
-<!-- Notifications Panel -->
-<div class="modal-overlay hidden" id="modal-notifications">
-  <div class="modal">
-    <div class="modal-header">
-      <h3>🔔 Notifications</h3>
-      <button class="close-btn" onclick="closeModal('modal-notifications')">✕</button>
+    <!-- Register Company -->
+    <div class="modal-overlay hidden" id="modal-register-company">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Inscription Entreprise</h3>
+          <button
+            class="close-btn"
+            onclick="closeModal('modal-register-company')"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="reg-e-alert"></div>
+          <div class="form-group">
+            <label>Nom de l'entreprise</label
+            ><input class="form-control" id="re-name" placeholder="Acme Corp" />
+          </div>
+          <div class="form-group">
+            <label>Email professionnel</label
+            ><input
+              class="form-control"
+              type="email"
+              id="re-email"
+              placeholder="rh@acme.com"
+            />
+          </div>
+          <div class="form-group">
+            <label>Mot de passe</label
+            ><input
+              class="form-control"
+              type="password"
+              id="re-pwd"
+              placeholder="Min. 6 caractères"
+            />
+          </div>
+          <div class="form-group">
+            <label>Secteur d'activité</label>
+            <select class="form-control" id="re-secteur">
+              <option value="">Choisir un secteur...</option>
+              <option>Technologie & Informatique</option>
+              <option>Finance & Banque</option>
+              <option>Santé & Médical</option>
+              <option>Éducation & Formation</option>
+              <option>Commerce & Distribution</option>
+              <option>Industrie & Manufacturing</option>
+              <option>Marketing & Communication</option>
+              <option>Ressources Humaines</option>
+              <option>Transport & Logistique</option>
+              <option>Immobilier & Construction</option>
+              <option>Autre</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-ghost"
+            onclick="closeModal('modal-register-company')"
+          >
+            Annuler
+          </button>
+          <button class="btn btn-primary" onclick="registerCompany()">
+            S'inscrire
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="modal-body" id="modal-notifs-list" style="max-height:70vh;overflow-y:auto"></div>
-  </div>
-</div>
 
-<!-- Success modal -->
-<div class="modal-overlay hidden" id="modal-success">
-  <div class="modal" style="max-width:380px;text-align:center">
-    <div class="modal-body" style="padding:2.5rem">
-      <div style="font-size:3rem;margin-bottom:1rem" id="success-icon">✅</div>
-      <h3 id="success-title" style="color:var(--navy);margin-bottom:.7rem"></h3>
-      <p id="success-msg" style="color:var(--gray-600);font-size:.9rem;margin-bottom:1.5rem"></p>
-      <button class="btn btn-primary w-full" onclick="closeModal('modal-success')">Fermer</button>
+    <!-- New Offer -->
+    <div class="modal-overlay hidden" id="modal-new-offer">
+      <div class="modal modal-lg">
+        <div class="modal-header">
+          <h3>Publier une offre</h3>
+          <button class="close-btn" onclick="closeModal('modal-new-offer')">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="offer-alert"></div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Titre du poste</label
+              ><input
+                class="form-control"
+                id="off-title"
+                placeholder="Développeur Full Stack"
+              />
+            </div>
+            <div class="form-group">
+              <label>Type de contrat</label>
+              <select class="form-control" id="off-type">
+                <option>CDI</option>
+                <option>CDD</option>
+                <option>Stage</option>
+                <option>Alternance</option>
+                <option>Freelance</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Localisation</label
+              ><input
+                class="form-control"
+                id="off-location"
+                placeholder="Paris, France"
+              />
+            </div>
+            <div class="form-group">
+              <label>Salaire (optionnel)</label
+              ><input
+                class="form-control"
+                id="off-salary"
+                placeholder="45 000 – 55 000 €/an"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description</label
+            ><textarea
+              class="form-control"
+              id="off-desc"
+              placeholder="Décrivez le poste, les missions, les compétences requises..."
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal('modal-new-offer')">
+            Annuler
+          </button>
+          <button class="btn btn-primary" onclick="publishOffer()">
+             Publier
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<script>
-// ═══════════════════════════════════════════════════
-//  API CONFIG
-// ═══════════════════════════════════════════════════
-const API = 'http://localhost:8080/api';
+    <!-- Apply -->
+    <div class="modal-overlay hidden" id="modal-apply">
+      <div class="modal modal-lg">
+        <div class="modal-header">
+          <h3> Postuler à l'offre</h3>
+          <button class="close-btn" onclick="closeModal('modal-apply')">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div
+            id="apply-offer-info"
+            class="card"
+            style="margin-bottom: 1.2rem; background: var(--gray-50)"
+          >
+            <div class="card-body" style="padding: 1rem"></div>
+          </div>
+          <div id="apply-alert"></div>
+          <div class="form-group">
+            <label>Votre ID Candidat</label
+            ><input class="form-control" id="apply-id" readonly />
+          </div>
+          <div class="form-group">
+            <label>Lettre de motivation</label
+            ><textarea
+              class="form-control"
+              id="apply-letter"
+              style="min-height: 140px"
+              placeholder="Madame, Monsieur,..."
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label>CV (PDF)</label>
+            <div class="file-upload">
+              <input
+                type="file"
+                id="apply-cv"
+                accept=".pdf,.doc,.docx"
+                onchange="handleFileUpload('apply-cv', 'apply-cv-name')"
+              />
+               
+              <div>Glissez votre CV ici ou cliquez pour choisir</div>
+              <div class="hint">PDF, DOC – Max 5 Mo</div>
+              <div class="file-name hidden" id="apply-cv-name"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal('modal-apply')">
+            Annuler
+          </button>
+          <button class="btn btn-primary" onclick="submitApplication()">
+            <img
+              src="images/arrow-up.png"
+              style="width: 16px; height: 16px; object-fit: contain"
+            />
+            Envoyer ma candidature
+          </button>
+        </div>
+      </div>
+    </div>
 
-async function apiGet(url) {
-  const res = await fetch(API + url);
-  if (!res.ok) throw new Error(await res.text());
-  return res.json();
-}
-async function apiPost(url, data) {
-  const res = await fetch(API + url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
-  const text = await res.text();
-  if (!res.ok) throw new Error(text);
-  try { return JSON.parse(text); } catch { return text; }
-}
-async function apiPut(url, data) {
-  const res = await fetch(API + url, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
-  const text = await res.text();
-  if (!res.ok) throw new Error(text);
-  try { return JSON.parse(text); } catch { return text; }
-}
-async function apiDelete(url) {
-  const res = await fetch(API + url, { method: 'DELETE' });
-  return res.ok;
-}
+    <!-- Job Detail -->
+    <div class="modal-overlay hidden" id="modal-job-detail">
+      <div class="modal modal-lg">
+        <div class="modal-header">
+          <h3>💼 Détail de l'offre</h3>
+          <button class="close-btn" onclick="closeModal('modal-job-detail')">
+            ✕
+          </button>
+        </div>
+        <div id="modal-job-detail-body" class="modal-body"></div>
+        <div class="modal-footer" id="modal-job-detail-footer"></div>
+      </div>
+    </div>
 
-// ═══════════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════════
-let currentUser = null;
-let currentOfferForApply = null;
+    <!-- App Detail (company) -->
+    <div class="modal-overlay hidden" id="modal-app-detail">
+      <div class="modal modal-lg">
+        <div class="modal-header">
+          <h3>👤 Candidature</h3>
+          <button class="close-btn" onclick="closeModal('modal-app-detail')">
+            ✕
+          </button>
+        </div>
+        <div id="modal-app-detail-body" class="modal-body"></div>
+        <div class="modal-footer" id="modal-app-detail-footer"></div>
+      </div>
+    </div>
 
-function uid() { return Math.random().toString(36).substr(2, 9); }
-function now() { return new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' }); }
+    <!-- Notifications Panel -->
+    <div class="modal-overlay hidden" id="modal-notifications">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>🔔 Notifications</h3>
+          <button class="close-btn" onclick="closeModal('modal-notifications')">
+            ✕
+          </button>
+        </div>
+        <div
+          class="modal-body"
+          id="modal-notifs-list"
+          style="max-height: 70vh; overflow-y: auto"
+        ></div>
+      </div>
+    </div>
 
-// ═══════════════════════════════════════════════════
-//  PAGE ROUTING
-// ═══════════════════════════════════════════════════
-function showPage(p) {
-  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
-  document.getElementById('page-' + p).classList.add('active');
-  if (p === 'home') renderHomeJobs();
-}
-function goHome() { showPage('home'); }
-function openUserDash() {
-  if (!currentUser) return;
-  showPage(currentUser.role === 'admin' ? 'admin' : currentUser.role === 'company' ? 'company' : 'candidate');
-}
+    <!-- Success -->
+    <div class="modal-overlay hidden" id="modal-success">
+      <div class="modal" style="max-width: 380px; text-align: center">
+        <div class="modal-body" style="padding: 2.5rem">
+          <div style="font-size: 3rem; margin-bottom: 1rem" id="success-icon">
+            ✅
+          </div>
+          <h3
+            id="success-title"
+            style="color: var(--navy); margin-bottom: 0.7rem"
+          ></h3>
+          <p
+            id="success-msg"
+            style="
+              color: var(--gray-600);
+              font-size: 0.9rem;
+              margin-bottom: 1.5rem;
+            "
+          ></p>
+          <button
+            class="btn btn-primary w-full"
+            onclick="closeModal('modal-success')"
+          >
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
 
-// ═══════════════════════════════════════════════════
-//  MODALS
-// ═══════════════════════════════════════════════════
-function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-function openRegister(type) {
-  closeModal('modal-register-choice');
-  if (type === 'admin') return;
-  openModal('modal-register-' + type);
-}
-function showAlert(el, msg, type = 'danger') {
-  document.getElementById(el).innerHTML = `<div class="alert alert-${type}">⚠️ ${msg}</div>`;
-}
-function clearAlert(el) { document.getElementById(el).innerHTML = ''; }
-function showSuccess(icon, title, msg) {
-  document.getElementById('success-icon').textContent = icon;
-  document.getElementById('success-title').textContent = title;
-  document.getElementById('success-msg').textContent = msg;
-  openModal('modal-success');
-}
+    <!-- Delete Account Modal -->
+    <div class="modal-overlay hidden" id="modal-delete-account">
+      <div class="modal">
+        <div class="modal-header">
+          <h3> Supprimer mon compte</h3>
+          <button
+            class="close-btn"
+            onclick="closeModal('modal-delete-account')"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger">
+            Cette action est irréversible. Toutes vos données seront
+            supprimées.
+          </div>
+          <div class="form-group">
+            <label>Motif de suppression (optionnel)</label>
+            <textarea
+              class="form-control"
+              id="delete-reason"
+              placeholder="Expliquez pourquoi vous supprimez votre compte..."
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-ghost"
+            onclick="closeModal('modal-delete-account')"
+          >
+            Annuler
+          </button>
+          <button class="btn btn-danger" onclick="confirmDeleteAccount()">
+            🗑 Confirmer la suppression
+          </button>
+        </div>
+      </div>
+    </div>
 
-// ═══════════════════════════════════════════════════
-//  AUTH
-// ═══════════════════════════════════════════════════
-async function doLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const pwd = document.getElementById('login-password').value;
-  if (!email || !pwd) { showAlert('login-alert', 'Remplissez tous les champs.'); return; }
-  clearAlert('login-alert');
-  try {
-    const data = await apiPost('/auth/login', { email, password: pwd });
-    loginSuccess(data);
-  } catch (e) {
-    showAlert('login-alert', e.message || 'Email ou mot de passe incorrect.');
-  }
-}
+    <!-- Admin Delete Candidate/Company -->
+    <div class="modal-overlay hidden" id="modal-admin-delete">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Supprimer le compte</h3>
+          <button class="close-btn" onclick="closeModal('modal-admin-delete')">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger">
+            Cette suppression est irréversible.
+          </div>
+          <input type="hidden" id="admin-delete-id" /><input
+            type="hidden"
+            id="admin-delete-type"
+          />
+          <div class="form-group">
+            <label>Motif de suppression</label>
+            <textarea
+              class="form-control"
+              id="admin-delete-reason"
+              placeholder="Non-conformité aux conditions d'utilisation..."
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-ghost"
+            onclick="closeModal('modal-admin-delete')"
+          >
+            Annuler
+          </button>
+          <button class="btn btn-danger" onclick="confirmAdminDelete()">
+            <img src="../images/icons/supprime.png" style="width:16px;height:16px;object-fit:contain">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
 
-function loginSuccess(data) {
-  if (data.role === 'admin') {
-    currentUser = { role: 'admin', name: 'Administrateur', id: 'admin' };
-  } else if (data.role === 'candidate') {
-    currentUser = { ...data.user, role: 'candidate', notifications: data.user.notifications || [] };
-  } else {
-    currentUser = { ...data.user, role: 'company', notifications: data.user.notifications || [] };
-  }
-  closeModal('modal-login');
-  updateNavForUser();
-  if (currentUser.role === 'admin') { showPage('admin'); renderAdminDash(); }
-  else if (currentUser.role === 'company') { showPage('company'); renderCompanyDash(); }
-  else { showPage('candidate'); renderCandidateDash(); }
-}
+    <script>
+      const API = "http://localhost:8080/api";
 
-function updateNavForUser() {
-  if (currentUser) {
-    document.getElementById('nav-auth-btns').classList.add('hidden');
-    document.getElementById('nav-user-btns').classList.remove('hidden');
-    const name = currentUser.role === 'candidate'
-      ? `${currentUser.prenom?.charAt(0) || ''}${currentUser.nom?.charAt(0) || ''}`
-      : (currentUser.name?.charAt(0) || 'A');
-    document.getElementById('nav-avatar').textContent = name.toUpperCase() || 'U';
-    updateNotifBadge();
-  } else {
-    document.getElementById('nav-auth-btns').classList.remove('hidden');
-    document.getElementById('nav-user-btns').classList.add('hidden');
-  }
-}
+      async function apiGet(url) {
+        const res = await fetch(API + url);
+        if (!res.ok) throw new Error(await res.text());
+        return res.json();
+      }
+      async function apiPost(url, data) {
+        const res = await fetch(API + url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        const text = await res.text();
+        if (!res.ok) throw new Error(text);
+        try {
+          return JSON.parse(text);
+        } catch {
+          return text;
+        }
+      }
+      async function apiPut(url, data) {
+        const res = await fetch(API + url, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        const text = await res.text();
+        if (!res.ok) throw new Error(text);
+        try {
+          return JSON.parse(text);
+        } catch {
+          return text;
+        }
+      }
+      async function apiDelete(url, data) {
+        const opts = { method: "DELETE" };
+        if (data) {
+          opts.headers = { "Content-Type": "application/json" };
+          opts.body = JSON.stringify(data);
+        }
+        const res = await fetch(API + url, opts);
+        return res.ok;
+      }
 
-function logout() {
-  currentUser = null;
-  updateNavForUser();
-  showPage('home');
-}
+      let currentUser = null;
+      let currentOfferForApply = null;
+      let deleteAccountRole = null;
 
-// ═══════════════════════════════════════════════════
-//  REGISTER
-// ═══════════════════════════════════════════════════
-async function registerCandidate() {
-  const prenom = document.getElementById('rc-prenom').value.trim();
-  const nom = document.getElementById('rc-nom').value.trim();
-  const email = document.getElementById('rc-email').value.trim();
-  const pwd = document.getElementById('rc-pwd').value;
-  if (!prenom || !nom || !email || !pwd) { showAlert('reg-c-alert', 'Tous les champs sont requis.'); return; }
-  if (pwd.length < 6) { showAlert('reg-c-alert', 'Mot de passe trop court (min. 6 car.).'); return; }
-  try {
-    const user = await apiPost('/auth/register/candidate', { prenom, nom, email, password: pwd });
-    closeModal('modal-register-candidate');
-    showSuccess('📧', 'Inscription envoyée !', `Votre compte est en attente de validation. Votre ID est ${user.id}.`);
-    ['rc-prenom', 'rc-nom', 'rc-email', 'rc-pwd'].forEach(f => document.getElementById(f).value = '');
-    clearAlert('reg-c-alert');
-  } catch (e) {
-    showAlert('reg-c-alert', e.message || 'Erreur lors de l\'inscription.');
-  }
-}
+      // Vérifier la syntaxe des emails
 
-async function registerCompany() {
-  const name = document.getElementById('re-name').value.trim();
-  const email = document.getElementById('re-email').value.trim();
-  const pwd = document.getElementById('re-pwd').value;
-  const secteur = document.getElementById('re-secteur').value;
-  if (!name || !email || !pwd || !secteur) { showAlert('reg-e-alert', 'Tous les champs sont requis.'); return; }
-  if (pwd.length < 6) { showAlert('reg-e-alert', 'Mot de passe trop court.'); return; }
-  try {
-    await apiPost('/auth/register/company', { name, email, password: pwd, secteur });
-    closeModal('modal-register-company');
-    showSuccess('📧', 'Inscription envoyée !', 'Votre compte entreprise est en attente de validation.');
-    ['re-name', 're-email', 're-pwd', 're-secteur'].forEach(f => document.getElementById(f).value = '');
-    clearAlert('reg-e-alert');
-  } catch (e) {
-    showAlert('reg-e-alert', e.message || 'Erreur lors de l\'inscription.');
-  }
-}
+      function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        return re.test(email.trim());
+      }
 
-// ═══════════════════════════════════════════════════
-//  HOME JOBS
-// ═══════════════════════════════════════════════════
-async function renderHomeJobs(query = '') {
-  try {
-    const offers = await apiGet('/offers');
-    let filtered = offers;
-    if (query) filtered = offers.filter(o =>
-      o.title?.toLowerCase().includes(query) ||
-      o.companyName?.toLowerCase().includes(query) ||
-      o.location?.toLowerCase().includes(query) ||
-      o.secteur?.toLowerCase().includes(query)
-    );
-    const grid = document.getElementById('home-jobs-grid');
-    const empty = document.getElementById('home-empty');
-    if (!filtered.length) { grid.innerHTML = ''; empty.classList.remove('hidden'); }
-    else { empty.classList.add('hidden'); grid.innerHTML = filtered.map(o => jobCardHTML(o, 'home')).join(''); }
-    renderHeroStats(offers);
-  } catch (e) {
-    document.getElementById('home-jobs-grid').innerHTML = '<div class="empty-state"><div class="icon">⚠️</div><p>Impossible de charger les offres. Vérifiez que le serveur tourne.</p></div>';
-  }
-}
+      // ── ROUTING ──
+      function showPage(p) {
+        document
+          .querySelectorAll(".page")
+          .forEach((x) => x.classList.remove("active"));
+        document.getElementById("page-" + p).classList.add("active");
+        if (p === "home") renderHomeJobs();
+      }
+      function goHome() {
+        showPage("home");
+      }
+      function openUserDash() {
+        if (!currentUser) return;
+        showPage(
+          currentUser.role === "admin"
+            ? "admin"
+            : currentUser.role === "company"
+              ? "company"
+              : "candidate",
+        );
+      }
 
-async function renderHeroStats(offers) {
-  try {
-    const stats = await apiGet('/admin/dashboard');
-    document.getElementById('hero-stats').innerHTML = `
+      // ── MODALS ──
+      function openModal(id) {
+        document.getElementById(id).classList.remove("hidden");
+      }
+      function closeModal(id) {
+        document.getElementById(id).classList.add("hidden");
+      }
+      function openRegister(type) {
+        closeModal("modal-register-choice");
+        if (type !== "admin") openModal("modal-register-" + type);
+      }
+      function showAlert(el, msg, type = "danger") {
+        document.getElementById(el).innerHTML =
+          `<div class="alert alert-${type}"> ${msg}</div>`;
+      }
+      function clearAlert(el) {
+        document.getElementById(el).innerHTML = "";
+      }
+      function showSuccess(icon, title, msg) {
+        document.getElementById("success-icon").textContent = icon;
+        document.getElementById("success-title").textContent = title;
+        document.getElementById("success-msg").textContent = msg;
+        openModal("modal-success");
+      }
+
+      // ── AUTH ──
+      async function doLogin() {
+        const email = document.getElementById("login-email").value.trim();
+        const pwd = document.getElementById("login-password").value;
+
+        if (!email || !pwd) {
+          showAlert("login-alert", "Remplissez tous les champs.");
+          return;
+        }
+        if (!isValidEmail(email)) {
+          showAlert("login-alert", "Adresse email invalide.");
+          return;
+        } // email valide?
+
+        clearAlert("login-alert");
+        try {
+          const data = await apiPost("/auth/login", { email, password: pwd });
+          loginSuccess(data);
+        } catch (e) {
+          showAlert(
+            "login-alert",
+            e.message || "Email ou mot de passe incorrect.",
+          );
+        }
+      }
+
+      function loginSuccess(data) {
+        if (data.role === "admin") {
+          currentUser = { role: "admin", name: "Administrateur", id: "admin" };
+        } else if (data.role === "candidate") {
+          currentUser = { ...data.user, role: "candidate" };
+        } else {
+          currentUser = { ...data.user, role: "company" };
+        }
+        closeModal("modal-login");
+        updateNavForUser();
+        if (currentUser.role === "admin") {
+          showPage("admin");
+          renderAdminDash();
+        } else if (currentUser.role === "company") {
+          showPage("company");
+          renderCompanyDash();
+        } else {
+          showPage("candidate");
+          renderCandidateDash();
+        }
+      }
+
+      function updateNavForUser() {
+        if (currentUser) {
+          document.getElementById("nav-auth-btns").classList.add("hidden");
+          document.getElementById("nav-user-btns").classList.remove("hidden");
+          const init =
+            currentUser.role === "candidate"
+              ? `${currentUser.prenom?.charAt(0) || ""}${currentUser.nom?.charAt(0) || ""}`
+              : currentUser.name?.charAt(0) || "A";
+          document.getElementById("nav-avatar").textContent =
+            init.toUpperCase() || "U";
+          updateAllNotifBadges();
+        } else {
+          document.getElementById("nav-auth-btns").classList.remove("hidden");
+          document.getElementById("nav-user-btns").classList.add("hidden");
+        }
+      }
+
+      function logout() {
+        currentUser = null;
+        updateNavForUser();
+        showPage("home");
+      }
+
+      // ── REGISTER ──
+      async function registerCandidate() {
+        const prenom = document.getElementById("rc-prenom").value.trim();
+        const nom = document.getElementById("rc-nom").value.trim();
+        const email = document.getElementById("rc-email").value.trim();
+        const pwd = document.getElementById("rc-pwd").value;
+
+        if (!prenom || !nom || !email || !pwd) {
+          showAlert("reg-c-alert", "Tous les champs sont requis.");
+          return;
+        }
+        if (!isValidEmail(email)) {
+          showAlert(
+            "reg-c-alert",
+            "Adresse email invalide (ex: nom@domaine.fr).",
+          );
+          return;
+        }
+        if (pwd.length < 6) {
+          showAlert("reg-c-alert", "Mot de passe trop court (min. 6 car.).");
+          return;
+        }
+
+        try {
+          const user = await apiPost("/auth/register/candidate", {
+            prenom,
+            nom,
+            email,
+            password: pwd,
+          });
+          closeModal("modal-register-candidate");
+          showSuccess(
+            '<img src="images/icons/admin_attente.png" class="icon-alert">',
+              "Inscription envoyée !",
+              `Compte en attente de validation. Votre ID : ${user.id}`
+          );
+          ["rc-prenom", "rc-nom", "rc-email", "rc-pwd"].forEach(
+            (f) => (document.getElementById(f).value = ""),
+          );
+          clearAlert("reg-c-alert");
+        } catch (e) {
+          showAlert(
+            "reg-c-alert",
+            e.message || "Erreur lors de l'inscription.",
+          );
+        }
+      }
+
+      async function registerCompany() {
+        const name = document.getElementById("re-name").value.trim();
+        const email = document.getElementById("re-email").value.trim();
+        const pwd = document.getElementById("re-pwd").value;
+        const secteur = document.getElementById("re-secteur").value;
+
+        if (!name || !email || !pwd || !secteur) {
+          showAlert("reg-e-alert", "Tous les champs sont requis.");
+          return;
+        }
+        if (!isValidEmail(email)) {
+          showAlert(
+            "reg-e-alert",
+            "Adresse email invalide (ex: contact@entreprise.fr).",
+          );
+          return;
+        }
+
+        try {
+          await apiPost("/auth/register/company", {
+            name,
+            email,
+            password: pwd,
+            secteur,
+          });
+          closeModal("modal-register-company");
+          showSuccess(
+            "📧",
+            "Inscription envoyée !",
+            "Votre compte entreprise est en attente de validation.",
+          );
+          ["re-name", "re-email", "re-pwd", "re-secteur"].forEach(
+            (f) => (document.getElementById(f).value = ""),
+          );
+          clearAlert("reg-e-alert");
+        } catch (e) {
+          showAlert("reg-e-alert", e.message || "Erreur.");
+        }
+      }
+
+      // ── HOME JOBS ──
+      async function renderHomeJobs(query = "") {
+        try {
+          const offers = await apiGet("/offers");
+          let filtered = offers;
+          if (query)
+            filtered = offers.filter(
+              (o) =>
+                o.title?.toLowerCase().includes(query) ||
+                o.companyName?.toLowerCase().includes(query) ||
+                o.location?.toLowerCase().includes(query) ||
+                o.secteur?.toLowerCase().includes(query),
+            );
+          const grid = document.getElementById("home-jobs-grid");
+          const empty = document.getElementById("home-empty");
+          if (!filtered.length) {
+            grid.innerHTML = "";
+            empty.classList.remove("hidden");
+          } else {
+            empty.classList.add("hidden");
+            grid.innerHTML = filtered
+              .map((o) => jobCardHTML(o, "home"))
+              .join("");
+          }
+          renderHeroStats(offers);
+        } catch (e) {
+          document.getElementById("home-jobs-grid").innerHTML =
+            '<div class="empty-state"> <p>Impossible de charger les offres. Vérifiez que le serveur tourne.</p></div>';
+        }
+      }
+
+      async function renderHeroStats(offers) {
+        try {
+          const stats = await apiGet("/admin/dashboard");
+          document.getElementById("hero-stats").innerHTML = `
       <div class="stat-card"><div class="stat-num">${offers?.length || 0}</div><div class="stat-label">Offres actives</div></div>
       <div class="stat-card"><div class="stat-num">${stats.validatedCandidates || 0}+</div><div class="stat-label">Candidats inscrits</div></div>
       <div class="stat-card"><div class="stat-num">${stats.validatedCompanies || 0}+</div><div class="stat-label">Entreprises partenaires</div></div>
       <div class="stat-card"><div class="stat-num">${stats.totalApplications || 0}+</div><div class="stat-label">Candidatures envoyées</div></div>`;
-  } catch (e) {}
-}
+        } catch (e) {}
+      }
 
-function filterHomeJobs() {
-  const q = document.getElementById('home-search').value.toLowerCase();
-  renderHomeJobs(q);
-}
-
-function jobCardHTML(o, ctx) {
-  return `<div class="job-card" onclick="openJobDetail('${o.id}','${ctx}')">
+      function filterHomeJobs() {
+        renderHomeJobs(
+          document.getElementById("home-search").value.toLowerCase(),
+        );
+      }
+      function jobCardHTML(o, ctx) {
+        return `<div class="job-card" onclick="openJobDetail('${o.id}','${ctx}')">
     <div class="job-card-header">
       <div style="display:flex;gap:.75rem;align-items:flex-start">
-        <div class="company-logo">${(o.companyName || '?').charAt(0)}</div>
+        <div class="company-logo">${(o.companyName || "?").charAt(0)}</div>
         <div><div class="job-title">${o.title}</div><div class="job-company">${o.companyName}</div></div>
       </div>
-      <span class="badge ${o.type === 'CDI' ? 'badge-teal' : o.type === 'Stage' ? 'badge-info' : o.type === 'Alternance' ? 'badge-warning' : 'badge-navy'}">${o.type}</span>
+      <span class="badge ${o.type === "CDI" ? "badge-teal" : o.type === "Stage" ? "badge-info" : o.type === "Alternance" ? "badge-warning" : "badge-navy"}">${o.type}</span>
     </div>
-    <p style="font-size:.82rem;color:var(--gray-600);line-height:1.5;margin-bottom:.75rem">${(o.description || '').substring(0, 120)}...</p>
+    <p style="font-size:.82rem;color:var(--gray-600);line-height:1.5;margin-bottom:.75rem">${(o.description || "").substring(0, 120)}...</p>
     <div class="job-meta">
-      <span class="job-tag">📍 ${o.location}</span>
-      ${o.salary ? `<span class="job-tag teal">💰 ${o.salary}</span>` : ''}
+      <span class="job-tag"> ${o.location}</span>
+      ${o.salary ? `<span class="job-tag teal"> ${o.salary}</span>` : ""}
     </div>
   </div>`;
-}
+      }
 
-// ═══════════════════════════════════════════════════
-//  JOB DETAIL
-// ═══════════════════════════════════════════════════
-async function openJobDetail(offerId, ctx) {
-  try {
-    const offers = await apiGet('/offers');
-    const o = offers.find(x => x.id === offerId);
-    if (!o) return;
-    const apps = await apiGet('/applications/offer/' + offerId);
-    document.getElementById('modal-job-detail-body').innerHTML = `
+      // ── JOB DETAIL ──
+      async function openJobDetail(offerId, ctx) {
+        try {
+          const offers = await apiGet("/offers");
+          const o = offers.find((x) => x.id === offerId);
+          if (!o) return;
+          const apps = await apiGet("/applications/offer/" + offerId);
+          document.getElementById("modal-job-detail-body").innerHTML = `
       <div class="job-detail-header">
         <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
-          <div class="company-logo" style="width:56px;height:56px;font-size:1.4rem">${(o.companyName || '?').charAt(0)}</div>
+          <div class="company-logo" style="width:56px;height:56px;font-size:1.4rem">${(o.companyName || "?").charAt(0)}</div>
           <div><h2 style="color:#fff;font-size:1.3rem">${o.title}</h2><p style="color:rgba(255,255,255,.7)">${o.companyName}</p></div>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:.5rem">
           <span class="badge badge-teal">${o.type}</span>
-          <span class="badge badge-navy">📍 ${o.location}</span>
-          ${o.salary ? `<span class="badge badge-success">💰 ${o.salary}</span>` : ''}
+          <span class="badge badge-navy"> ${o.location}</span>
+          ${o.salary ? `<span class="badge badge-success"> ${o.salary}</span>` : ""}
         </div>
       </div>
       <div style="padding:1.5rem">
         <h4 style="color:var(--navy);margin-bottom:.75rem">Description du poste</h4>
         <p style="color:var(--gray-600);line-height:1.7;white-space:pre-wrap">${o.description}</p>
         <div style="margin-top:1.5rem;padding:1rem;background:var(--gray-50);border-radius:var(--radius-sm)">
-          <div class="info-row"><span class="label">🏢 Secteur</span><span>${o.secteur || 'N/A'}</span></div>
-          <div class="info-row"><span class="label">📋 Candidatures</span><span>${apps.length} candidature(s)</span></div>
+          <div class="info-row"><span class="label"> Secteur</span><span>${o.secteur || "N/A"}</span></div>
+          <div class="info-row"><span class="label"> Candidatures</span><span>${apps.length} candidature(s)</span></div>
         </div>
       </div>`;
-    let footer = '';
-    if (!currentUser) {
-      footer = `<span style="font-size:.85rem;color:var(--gray-400)">Connectez-vous pour postuler</span><button class="btn btn-primary" onclick="closeModal('modal-job-detail');openModal('modal-login')">Se connecter</button>`;
-    } else if (currentUser.role === 'candidate' && currentUser.status === 'validated') {
-      const already = apps.find(a => a.candidateId === currentUser.id);
-      if (already) {
-        footer = `<span class="badge badge-success">✅ Candidature envoyée</span>`;
-      } else {
-        footer = `<button class="btn btn-ghost" onclick="closeModal('modal-job-detail')">Fermer</button><button class="btn btn-primary" onclick="closeModal('modal-job-detail');openApplyModal('${o.id}')">📤 Postuler</button>`;
+          let footer = "";
+          if (!currentUser) {
+            footer = `<span style="font-size:.85rem;color:var(--gray-400)">Connectez-vous pour postuler</span><button class="btn btn-primary" onclick="closeModal('modal-job-detail');openModal('modal-login')">Se connecter</button>`;
+          } else if (
+            currentUser.role === "candidate" &&
+            currentUser.status === "validated"
+          ) {
+            const already = apps.find((a) => a.candidateId === currentUser.id);
+            footer = already
+              ? `<span class="badge badge-success"> Candidature envoyée</span>`
+              : `<button class="btn btn-ghost" onclick="closeModal('modal-job-detail')">Fermer</button><button class="btn btn-primary" onclick="closeModal('modal-job-detail');openApplyModal('${o.id}')">📤 Postuler</button>`;
+          } else if (
+            currentUser.role === "candidate" &&
+            currentUser.status === "pending"
+          ) {
+            footer = `<span style="font-size:.85rem;color:var(--warning)">⏳ Compte en attente de validation</span>`;
+          } else {
+            footer = `<button class="btn btn-ghost" onclick="closeModal('modal-job-detail')">Fermer</button>`;
+          }
+          document.getElementById("modal-job-detail-footer").innerHTML = footer;
+          openModal("modal-job-detail");
+        } catch (e) {
+          console.error(e);
+        }
       }
-    } else if (currentUser.role === 'candidate' && currentUser.status === 'pending') {
-      footer = `<span style="font-size:.85rem;color:var(--warning)">⏳ Compte en attente de validation</span>`;
-    } else {
-      footer = `<button class="btn btn-ghost" onclick="closeModal('modal-job-detail')">Fermer</button>`;
-    }
-    document.getElementById('modal-job-detail-footer').innerHTML = footer;
-    openModal('modal-job-detail');
-  } catch (e) { console.error(e); }
-}
 
-// ═══════════════════════════════════════════════════
-//  APPLY
-// ═══════════════════════════════════════════════════
-async function openApplyModal(offerId) {
-  if (!currentUser || currentUser.role !== 'candidate') { openModal('modal-login'); return; }
-  currentOfferForApply = offerId;
-  try {
-    const offers = await apiGet('/offers');
-    const o = offers.find(x => x.id === offerId);
-    document.querySelector('#apply-offer-info .card-body').innerHTML = `<strong>${o.title}</strong> — ${o.companyName} <span class="badge badge-teal" style="margin-left:.5rem">${o.type}</span>`;
-    document.getElementById('apply-id').value = currentUser.id;
-    document.getElementById('apply-letter').value = '';
-    document.getElementById('apply-cv-name').classList.add('hidden');
-    clearAlert('apply-alert');
-    openModal('modal-apply');
-  } catch (e) { console.error(e); }
-}
+      // ── APPLY ──
+      async function openApplyModal(offerId) {
+        if (!currentUser || currentUser.role !== "candidate") {
+          openModal("modal-login");
+          return;
+        }
+        currentOfferForApply = offerId;
+        try {
+          const offers = await apiGet("/offers");
+          const o = offers.find((x) => x.id === offerId);
+          document.querySelector("#apply-offer-info .card-body").innerHTML =
+            `<strong>${o.title}</strong> — ${o.companyName} <span class="badge badge-teal" style="margin-left:.5rem">${o.type}</span>`;
+          document.getElementById("apply-id").value = currentUser.id;
+          document.getElementById("apply-letter").value = "";
+          document.getElementById("apply-cv-name").classList.add("hidden");
+          clearAlert("apply-alert");
+          openModal("modal-apply");
+        } catch (e) {
+          console.error(e);
+        }
+      }
 
-function handleFileUpload(inputId, nameId) {
-  const f = document.getElementById(inputId).files[0];
-  if (f) { const el = document.getElementById(nameId); el.textContent = '📎 ' + f.name; el.classList.remove('hidden'); }
-}
+      function handleFileUpload(inputId, nameId) {
+        const f = document.getElementById(inputId).files[0];
+        if (f) {
+          const el = document.getElementById(nameId);
+          el.textContent = "📎 " + f.name;
+          el.classList.remove("hidden");
+        }
+      }
 
-async function submitApplication() {
-  const letter = document.getElementById('apply-letter').value.trim();
-  const cvFile = document.getElementById('apply-cv').files[0];
-  if (!letter) { showAlert('apply-alert', 'La lettre de motivation est requise.'); return; }
-  try {
-    const offers = await apiGet('/offers');
-    const o = offers.find(x => x.id === currentOfferForApply);
-    await apiPost('/applications', {
-      offerId: o.id,
-      offerTitle: o.title,
-      companyId: o.companyId,
-      companyName: o.companyName,
-      candidateId: currentUser.id,
-      candidateName: `${currentUser.prenom} ${currentUser.nom}`,
-      letter,
-      cvName: cvFile ? cvFile.name : 'Non fourni'
-    });
-    closeModal('modal-apply');
-    showSuccess('🚀', 'Candidature envoyée !', `Votre candidature pour "${o.title}" a bien été envoyée !`);
-    renderCandidateDash();
-  } catch (e) {
-    showAlert('apply-alert', e.message || 'Erreur lors de l\'envoi.');
-  }
-}
+      async function submitApplication() {
+        const letter = document.getElementById("apply-letter").value.trim();
+        const cvFile = document.getElementById("apply-cv").files[0];
+        if (!letter) {
+          showAlert("apply-alert", "La lettre de motivation est requise.");
+          return;
+        }
+        try {
+          const offers = await apiGet("/offers");
+          const o = offers.find((x) => x.id === currentOfferForApply);
+          const saved = await apiPost("/applications", {
+            offerId: o.id,
+            offerTitle: o.title,
+            companyId: o.companyId,
+            companyName: o.companyName,
+            candidateId: currentUser.id,
+            candidateName: `${currentUser.prenom} ${currentUser.nom}`,
+            letter,
+            cvName: cvFile ? cvFile.name : "Non fourni",
+          });
+          // Upload CV si présent
+          if (cvFile && saved.id) {
+            const fd = new FormData();
+            fd.append("file", cvFile);
+            await fetch(`${API}/applications/${saved.id}/upload-cv`, {
+              method: "POST",
+              body: fd,
+            });
+          }
+          closeModal("modal-apply");
+          showSuccess(
+            "",
+            "Candidature envoyée !",
+            `Votre candidature pour "${o.title}" a bien été envoyée !`,
+          );
+          renderCandidateDash();
+        } catch (e) {
+          showAlert("apply-alert", e.message || "Erreur lors de l'envoi.");
+        }
+      }
 
-// ═══════════════════════════════════════════════════
-//  CANDIDATE DASHBOARD
-// ═══════════════════════════════════════════════════
-async function renderCandidateDash() {
-  if (!currentUser || currentUser.role !== 'candidate') return;
-  const isPending = currentUser.status === 'pending';
-  document.getElementById('candidate-pending').classList[isPending ? 'remove' : 'add']('hidden');
-  document.getElementById('candidate-dash-content').classList[isPending ? 'add' : 'remove']('hidden');
-  if (isPending) {
-    document.getElementById('pending-candidate-id').textContent = 'ID: ' + currentUser.id + ' (en attente)';
-    return;
-  }
-  document.getElementById('c-name').textContent = `${currentUser.prenom} ${currentUser.nom}`;
-  document.getElementById('c-id-display').textContent = currentUser.id;
-  document.getElementById('c-profile-avatar').textContent = `${currentUser.prenom?.charAt(0) || ''}${currentUser.nom?.charAt(0) || ''}`.toUpperCase();
-  try {
-    const myApps = await apiGet('/applications/candidate/' + currentUser.id);
-    document.getElementById('c-stat-apps').textContent = myApps.length;
-    document.getElementById('c-stat-pending').textContent = myApps.filter(a => a.status === 'pending').length;
-    document.getElementById('c-stat-ok').textContent = myApps.filter(a => a.status === 'accepted').length;
-    document.getElementById('c-stat-rej').textContent = myApps.filter(a => a.status === 'rejected').length;
-    renderCandidateApps(myApps);
-  } catch (e) { console.error(e); }
-  renderCandidateJobs();
-  renderCandidateProfile();
-}
+      // ── CANDIDATE DASHBOARD ──
+      async function renderCandidateDash() {
+        if (!currentUser || currentUser.role !== "candidate") return;
+        const isPending = currentUser.status === "pending";
+        document
+          .getElementById("candidate-pending")
+          .classList[isPending ? "remove" : "add"]("hidden");
+        document
+          .getElementById("candidate-dash-content")
+          .classList[isPending ? "add" : "remove"]("hidden");
+        if (isPending) {
+          document.getElementById("pending-candidate-id").textContent =
+            "ID: " + currentUser.id + " (en attente)";
+          return;
+        }
+        document.getElementById("c-name").textContent =
+          `${currentUser.prenom} ${currentUser.nom}`;
+        document.getElementById("c-id-display").textContent = currentUser.id;
+        document.getElementById("c-profile-avatar").textContent =
+          `${currentUser.prenom?.charAt(0) || ""}${currentUser.nom?.charAt(0) || ""}`.toUpperCase();
+        try {
+          const myApps = await apiGet(
+            "/applications/candidate/" + currentUser.id,
+          );
+          document.getElementById("c-stat-apps").textContent = myApps.length;
+          document.getElementById("c-stat-pending").textContent = myApps.filter(
+            (a) => a.status === "pending",
+          ).length;
+          document.getElementById("c-stat-ok").textContent = myApps.filter(
+            (a) => a.status === "accepted",
+          ).length;
+          document.getElementById("c-stat-rej").textContent = myApps.filter(
+            (a) => a.status === "rejected",
+          ).length;
+          renderCandidateApps(myApps);
+        } catch (e) {
+          console.error(e);
+        }
+        renderCandidateJobs();
+        renderCandidateProfile();
+        loadCandidateNotifs();
+      }
 
-function candidateTab(tab) {
-  ['overview', 'jobs', 'applications', 'notifications', 'profile'].forEach(t => {
-    document.getElementById('c-' + t).classList.add('hidden');
-    document.getElementById('ctab-' + t).classList.remove('active');
-  });
-  document.getElementById('c-' + tab).classList.remove('hidden');
-  document.getElementById('ctab-' + tab).classList.add('active');
-}
+      function candidateTab(tab) {
+        [
+          "overview",
+          "jobs",
+          "applications",
+          "notifications",
+          "profile",
+        ].forEach((t) => {
+          document.getElementById("c-" + t).classList.add("hidden");
+          document.getElementById("ctab-" + t).classList.remove("active");
+        });
+        document.getElementById("c-" + tab).classList.remove("hidden");
+        document.getElementById("ctab-" + tab).classList.add("active");
+        if (tab === "notifications") loadCandidateNotifs();
+      }
 
-async function renderCandidateJobs() {
-  try {
-    const offers = await apiGet('/offers');
-    const query = document.getElementById('c-job-search')?.value.toLowerCase() || '';
-    const filtered = query ? offers.filter(o =>
-      o.title?.toLowerCase().includes(query) || o.companyName?.toLowerCase().includes(query)
-    ) : offers;
-    document.getElementById('c-jobs-grid').innerHTML = filtered.map(o => jobCardHTML(o, 'candidate')).join('') ||
-      '<div class="empty-state"><div class="icon">📋</div><p>Aucune offre disponible.</p></div>';
-  } catch (e) { console.error(e); }
-}
-function filterCandidateJobs() { renderCandidateJobs(); }
+      async function renderCandidateJobs() {
+        try {
+          const offers = await apiGet("/offers");
+          const q =
+            document.getElementById("c-job-search")?.value.toLowerCase() || "";
+          const f = q
+            ? offers.filter(
+                (o) =>
+                  o.title?.toLowerCase().includes(q) ||
+                  o.companyName?.toLowerCase().includes(q),
+              )
+            : offers;
+          document.getElementById("c-jobs-grid").innerHTML =
+            f.map((o) => jobCardHTML(o, "candidate")).join("") ||
+            '<div class="empty-state"> <p>Aucune offre disponible.</p></div>';
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      function filterCandidateJobs() {
+        renderCandidateJobs();
+      }
 
-function renderCandidateApps(myApps) {
-  const el = document.getElementById('c-apps-list');
-  if (!myApps || !myApps.length) {
-    el.innerHTML = '<div class="empty-state"><div class="icon">📤</div><p>Vous n\'avez pas encore postulé.</p></div>';
-    return;
-  }
-  el.innerHTML = myApps.map(a => `
+      function renderCandidateApps(myApps) {
+        const el = document.getElementById("c-apps-list");
+        if (!myApps || !myApps.length) {
+          el.innerHTML =
+            '<div class="empty-state"></div><p>Vous n\'avez pas encore postulé.</p></div>';
+          return;
+        }
+        el.innerHTML = myApps
+          .map(
+            (a) => `
     <div class="card" style="margin-bottom:1rem">
       <div class="card-body">
         <div class="flex justify-between items-center">
           <div>
             <div style="font-weight:700;color:var(--navy);font-family:'Sora',sans-serif">${a.offerTitle}</div>
             <div style="font-size:.85rem;color:var(--gray-400)">${a.companyName}</div>
+            <div style="font-size:.78rem;color:var(--gray-400);margin-top:.2rem">${a.datePostulation || ""}</div>
           </div>
           <span class="badge ${statusBadge(a.status)}">${statusLabel(a.status)}</span>
         </div>
+        ${a.status === "abandoned" ? "<div style=\"margin-top:.75rem;padding:.6rem 1rem;background:#f3f0ff;border-radius:var(--radius-sm);font-size:.8rem;color:#6d28d9\">⚠️ Cette candidature est marquée abandonnée car le compte entreprise ou l'offre n'est plus disponible.</div>" : ""}
       </div>
-    </div>`).join('');
-}
+    </div>`,
+          )
+          .join("");
+      }
 
-function renderCandidateProfile() {
-  document.getElementById('c-profile-details').innerHTML = `
-    <div class="info-row"><span class="label">👤 Nom complet</span><span>${currentUser.prenom} ${currentUser.nom}</span></div>
-    <div class="info-row"><span class="label">📧 Email</span><span>${currentUser.email}</span></div>
-    <div class="info-row"><span class="label">🆔 ID Candidat</span><span class="badge badge-teal">${currentUser.id}</span></div>
-    <div class="info-row"><span class="label">✅ Statut</span><span class="badge ${currentUser.status === 'validated' ? 'badge-success' : 'badge-warning'}">${currentUser.status === 'validated' ? 'Validé' : 'En attente'}</span></div>`;
-}
+      function renderCandidateProfile() {
+        document.getElementById("c-profile-details").innerHTML = `
+    <div class="info-row"><span class="label"> Nom complet</span><span>${currentUser.prenom} ${currentUser.nom}</span></div>
+    <div class="info-row"><span class="label"> Email</span><span>${currentUser.email}</span></div>
+    <div class="info-row"><span class="label"> ID Candidat</span><span class="badge badge-teal">${currentUser.id}</span></div>
+    <div class="info-row"><span class="label"> Statut</span><span class="badge ${currentUser.status === "validated" ? "badge-success" : "badge-warning"}">${currentUser.status === "validated" ? "Validé" : "En attente"}</span></div>`;
+      }
 
-// ═══════════════════════════════════════════════════
-//  COMPANY DASHBOARD
-// ═══════════════════════════════════════════════════
-async function renderCompanyDash() {
-  if (!currentUser || currentUser.role !== 'company') return;
-  const isPending = currentUser.status === 'pending';
-  document.getElementById('company-pending').classList[isPending ? 'remove' : 'add']('hidden');
-  document.getElementById('company-dash-content').classList[isPending ? 'add' : 'remove']('hidden');
-  if (isPending) return;
-  document.getElementById('en-name').textContent = currentUser.name;
-  document.getElementById('en-profile-avatar').textContent = currentUser.name?.charAt(0) || 'E';
-  try {
-    const myOffers = await apiGet('/offers/company/' + currentUser.id);
-    const myApps = await apiGet('/applications/company/' + currentUser.id);
-    document.getElementById('en-stat-offers').textContent = myOffers.length;
-    document.getElementById('en-stat-apps').textContent = myApps.length;
-    document.getElementById('en-stat-ok').textContent = myApps.filter(a => a.status === 'accepted').length;
-    document.getElementById('en-stat-rej').textContent = myApps.filter(a => a.status === 'rejected').length;
-    renderCompanyOffers(myOffers);
-    renderCompanyApps(myApps);
-  } catch (e) { console.error(e); }
-  renderCompanyProfile();
-}
+      // ── NOTIFICATIONS CANDIDAT ──
+      async function loadCandidateNotifs() {
+        try {
+          const notifs = await apiGet(
+            "/notifications/candidate/" + currentUser.id,
+          );
+          const unread = notifs.filter((n) => !n.read).length;
+          const badge = document.getElementById("c-notif-badge");
+          if (unread > 0) {
+            badge.textContent = unread;
+            badge.classList.remove("hidden");
+          } else badge.classList.add("hidden");
+          document.getElementById("nav-notif-count").textContent = unread;
+          if (unread > 0)
+            document
+              .getElementById("nav-notif-count")
+              .classList.remove("hidden");
+          else
+            document.getElementById("nav-notif-count").classList.add("hidden");
+          const list = document.getElementById("c-notifs-list");
+          list.innerHTML = notifs.length
+            ? notifs.map((n) => notifItemHTML(n)).join("")
+            : '<div class="empty-state"> <p>Aucune notification.</p></div>';
+        } catch (e) {
+          console.error(e);
+        }
+      }
 
-function companyTab(tab) {
-  ['overview', 'offers', 'applications', 'notifications', 'profile'].forEach(t => {
-    document.getElementById('en-' + t).classList.add('hidden');
-    document.getElementById('entab-' + t).classList.remove('active');
-  });
-  document.getElementById('en-' + tab).classList.remove('hidden');
-  document.getElementById('entab-' + tab).classList.add('active');
-}
+      async function markAllReadCandidate() {
+        try {
+          await apiPut(
+            "/notifications/candidate/" + currentUser.id + "/read-all",
+            {},
+          );
+          loadCandidateNotifs();
+        } catch (e) {}
+      }
 
-function renderCompanyOffers(myOffers) {
-  const el = document.getElementById('en-offers-list');
-  if (!myOffers || !myOffers.length) {
-    el.innerHTML = '<div class="empty-state"><div class="icon">💼</div><p>Aucune offre publiée.</p></div>';
-    return;
-  }
-  el.innerHTML = myOffers.map(o => `
+      // ── COMPANY DASHBOARD ──
+      async function renderCompanyDash() {
+        if (!currentUser || currentUser.role !== "company") return;
+        const isPending = currentUser.status === "pending";
+        document
+          .getElementById("company-pending")
+          .classList[isPending ? "remove" : "add"]("hidden");
+        document
+          .getElementById("company-dash-content")
+          .classList[isPending ? "add" : "remove"]("hidden");
+        if (isPending) return;
+        document.getElementById("en-name").textContent = currentUser.name;
+        document.getElementById("en-profile-avatar").textContent =
+          currentUser.name?.charAt(0) || "E";
+        try {
+          const myOffers = await apiGet("/offers/company/" + currentUser.id);
+          const myApps = await apiGet(
+            "/applications/company/" + currentUser.id,
+          );
+          document.getElementById("en-stat-offers").textContent =
+            myOffers.length;
+          document.getElementById("en-stat-apps").textContent = myApps.length;
+          document.getElementById("en-stat-ok").textContent = myApps.filter(
+            (a) => a.status === "accepted",
+          ).length;
+          document.getElementById("en-stat-rej").textContent = myApps.filter(
+            (a) => a.status === "rejected",
+          ).length;
+          renderCompanyOffers(myOffers);
+          renderCompanyApps(myApps);
+        } catch (e) {
+          console.error(e);
+        }
+        renderCompanyProfile();
+        loadCompanyNotifs();
+      }
+
+      function companyTab(tab) {
+        [
+          "overview",
+          "offers",
+          "applications",
+          "notifications",
+          "profile",
+        ].forEach((t) => {
+          document.getElementById("en-" + t).classList.add("hidden");
+          document.getElementById("entab-" + t).classList.remove("active");
+        });
+        document.getElementById("en-" + tab).classList.remove("hidden");
+        document.getElementById("entab-" + tab).classList.add("active");
+        if (tab === "notifications") loadCompanyNotifs();
+      }
+
+      function renderCompanyOffers(myOffers) {
+        const el = document.getElementById("en-offers-list");
+        if (!myOffers || !myOffers.length) {
+          el.innerHTML =
+            '<div class="empty-state"> <p>Aucune offre publiée.</p></div>';
+          return;
+        }
+        el.innerHTML = myOffers
+          .map(
+            (o) => `
     <div class="card" style="margin-bottom:1rem">
       <div class="card-body">
         <div class="flex justify-between items-center">
@@ -1221,21 +1944,28 @@ function renderCompanyOffers(myOffers) {
             <div style="font-weight:700;color:var(--navy);font-family:'Sora',sans-serif">${o.title}</div>
             <div style="font-size:.82rem;color:var(--gray-400)">${o.location} · ${o.type}</div>
           </div>
-          <span class="badge badge-teal">✅ Active</span>
+          <div style="display:flex;gap:.5rem;align-items:center">
+            <span class="badge badge-teal"> Active</span>
+            <button class="btn btn-danger btn-sm" onclick="deleteOffer('${o.id}')">🗑 Supprimer</button>
+          </div>
         </div>
-        <p style="margin-top:.75rem;font-size:.82rem;color:var(--gray-600)">${(o.description || '').substring(0, 120)}...</p>
       </div>
-    </div>`).join('');
-}
+    </div>`,
+          )
+          .join("");
+      }
 
-function renderCompanyApps(myApps) {
-  const el = document.getElementById('en-apps-list');
-  if (!myApps || !myApps.length) {
-    el.innerHTML = '<div class="empty-state"><div class="icon">👥</div><p>Aucune candidature reçue.</p></div>';
-    return;
-  }
-  el.innerHTML = myApps.map(a => `
-    <div class="card" style="margin-bottom:.75rem">
+      function renderCompanyApps(myApps) {
+        const el = document.getElementById("en-apps-list");
+        if (!myApps || !myApps.length) {
+          el.innerHTML =
+            '<div class="empty-state"> <p>Aucune candidature reçue.</p></div>';
+          return;
+        }
+        el.innerHTML = myApps
+          .map(
+            (a) => `
+    <div class="card" style="margin-bottom:.75rem${a.status === "abandoned" ? ";opacity:.65" : ""}">
       <div class="card-body">
         <div class="flex justify-between items-center">
           <div>
@@ -1244,183 +1974,566 @@ function renderCompanyApps(myApps) {
           </div>
           <div style="display:flex;gap:.5rem;align-items:center">
             <span class="badge ${statusBadge(a.status)}">${statusLabel(a.status)}</span>
-            <button class="btn btn-outline btn-sm" onclick="openAppDetail('${a.id}')">👁 Voir</button>
+            ${a.status !== "abandoned" ? `<button class="btn btn-outline btn-sm" onclick="openAppDetail('${a.id}')">👁 Voir</button>` : '<span style="font-size:.78rem;color:var(--gray-400)">Compte supprimé</span>'}
           </div>
         </div>
       </div>
-    </div>`).join('');
-}
+    </div>`,
+          )
+          .join("");
+      }
 
-function renderCompanyProfile() {
-  document.getElementById('en-profile-details').innerHTML = `
-    <div class="info-row"><span class="label">🏢 Entreprise</span><span style="font-weight:700">${currentUser.name}</span></div>
-    <div class="info-row"><span class="label">📧 Email</span><span>${currentUser.email}</span></div>
-    <div class="info-row"><span class="label">🏭 Secteur</span><span>${currentUser.secteur}</span></div>
-    <div class="info-row"><span class="label">🆔 ID</span><span class="badge badge-navy">${currentUser.id}</span></div>
-    <div class="info-row"><span class="label">✅ Statut</span><span class="badge ${currentUser.status === 'validated' ? 'badge-success' : 'badge-warning'}">${currentUser.status === 'validated' ? 'Validé' : 'En attente'}</span></div>`;
-}
+      function renderCompanyProfile() {
+        document.getElementById("en-profile-details").innerHTML = `
+    <div class="info-row"><span class="label">Entreprise</span><span style="font-weight:700">${currentUser.name}</span></div>
+    <div class="info-row"><span class="label">Email</span><span>${currentUser.email}</span></div>
+    <div class="info-row"><span class="label">Secteur</span><span>${currentUser.secteur}</span></div>
+    <div class="info-row"><span class="label">ID</span><span class="badge badge-navy">${currentUser.id}</span></div>
+    <div class="info-row"><span class="label">Statut</span><span class="badge ${currentUser.status === "validated" ? "badge-success" : "badge-warning"}">${currentUser.status === "validated" ? "Validé" : "En attente"}</span></div>`;
+      }
 
-async function publishOffer() {
-  const title = document.getElementById('off-title').value.trim();
-  const type = document.getElementById('off-type').value;
-  const location = document.getElementById('off-location').value.trim();
-  const salary = document.getElementById('off-salary').value.trim();
-  const description = document.getElementById('off-desc').value.trim();
-  if (!title || !location || !description) { showAlert('offer-alert', 'Titre, localisation et description sont requis.'); return; }
-  try {
-    await apiPost('/offers', {
-      companyId: currentUser.id,
-      companyName: currentUser.name,
-      title, type, location, salary, description,
-      secteur: currentUser.secteur
-    });
-    closeModal('modal-new-offer');
-    ['off-title', 'off-location', 'off-salary', 'off-desc'].forEach(f => document.getElementById(f).value = '');
-    clearAlert('offer-alert');
-    renderCompanyDash();
-    showSuccess('💼', 'Offre publiée !', `L'offre "${title}" est maintenant visible.`);
-  } catch (e) {
-    showAlert('offer-alert', e.message || 'Erreur lors de la publication.');
-  }
-}
+      // ── NOTIFICATIONS ENTREPRISE ──
+      async function loadCompanyNotifs() {
+        try {
+          const notifs = await apiGet(
+            "/notifications/company/" + currentUser.id,
+          );
+          const unread = notifs.filter((n) => !n.read).length;
+          const badge = document.getElementById("en-notif-badge");
+          if (unread > 0) {
+            badge.textContent = unread;
+            badge.classList.remove("hidden");
+          } else badge.classList.add("hidden");
+          document.getElementById("nav-notif-count").textContent = unread;
+          if (unread > 0)
+            document
+              .getElementById("nav-notif-count")
+              .classList.remove("hidden");
+          else
+            document.getElementById("nav-notif-count").classList.add("hidden");
+          const list = document.getElementById("en-notifs-list");
+          list.innerHTML = notifs.length
+            ? notifs.map((n) => notifItemHTML(n)).join("")
+            : '<div class="empty-state"> <p>Aucune notification.</p></div>';
+        } catch (e) {
+          console.error(e);
+        }
+      }
 
-async function openAppDetail(appId) {
-  try {
-    const myApps = await apiGet('/applications/company/' + currentUser.id);
-    const a = myApps.find(x => x.id === appId);
-    if (!a) return;
-    document.getElementById('modal-app-detail-body').innerHTML = `
+      async function markAllReadCompany() {
+        try {
+          await apiPut(
+            "/notifications/company/" + currentUser.id + "/read-all",
+            {},
+          );
+          loadCompanyNotifs();
+        } catch (e) {}
+      }
+
+      // ── PUBLISH OFFER ──
+      async function publishOffer() {
+        const title = document.getElementById("off-title").value.trim();
+        const type = document.getElementById("off-type").value;
+        const location = document.getElementById("off-location").value.trim();
+        const salary = document.getElementById("off-salary").value.trim();
+        const description = document.getElementById("off-desc").value.trim();
+        if (!title || !location || !description) {
+          showAlert(
+            "offer-alert",
+            "Titre, localisation et description requis.",
+          );
+          return;
+        }
+        try {
+          await apiPost("/offers", {
+            companyId: currentUser.id,
+            companyName: currentUser.name,
+            title,
+            type,
+            location,
+            salary,
+            description,
+            secteur: currentUser.secteur,
+          });
+          closeModal("modal-new-offer");
+          ["off-title", "off-location", "off-salary", "off-desc"].forEach(
+            (f) => (document.getElementById(f).value = ""),
+          );
+          clearAlert("offer-alert");
+          renderCompanyDash();
+          showSuccess(
+            "💼",
+            "Offre publiée !",
+            `L'offre "${title}" est maintenant visible.`,
+          );
+        } catch (e) {
+          showAlert("offer-alert", e.message || "Erreur.");
+        }
+      }
+
+      async function deleteOffer(id) {
+        if (!confirm("Supprimer cette offre ?")) return;
+        await fetch(`${API}/offers/${id}`, { method: "DELETE" });
+        renderCompanyDash();
+      }
+
+      // ── APP DETAIL (company) ──
+      async function openAppDetail(appId) {
+        try {
+          const myApps = await apiGet(
+            "/applications/company/" + currentUser.id,
+          );
+          const a = myApps.find((x) => x.id === appId);
+          if (!a) return;
+          const hasCv = a.cvName && a.cvName !== "Non fourni";
+          document.getElementById("modal-app-detail-body").innerHTML = `
       <div style="background:var(--gray-50);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1.2rem">
         <div style="font-weight:700;color:var(--navy);font-size:1.05rem">${a.candidateName}</div>
         <div style="font-size:.82rem;color:var(--gray-400)">Pour : ${a.offerTitle}</div>
       </div>
-      <div class="info-row"><span class="label">📄 CV</span><span>${a.cvName}</span></div>
-      <div class="info-row"><span class="label">✅ Statut</span><span class="badge ${statusBadge(a.status)}">${statusLabel(a.status)}</span></div>
+      <div class="info-row"><span class="label"> CV</span>
+        <span>${a.cvName || "Non fourni"}
+          ${hasCv ? `<a href="${API}/applications/${a.id}/download-cv" class="btn btn-outline btn-sm" style="margin-left:.5rem" target="_blank"><img src="../images/icons/download.svg" style="width:16px;height:16px;object-fit:contain"> Télécharger CV</a>` : ""}
+        </span>
+      </div> 
+      <div class="info-row"><span class="label"> Statut</span><span class="badge ${statusBadge(a.status)}">${statusLabel(a.status)}</span></div>
       <div style="margin-top:1rem">
         <div style="font-weight:700;color:var(--navy);margin-bottom:.5rem;font-size:.875rem">Lettre de motivation :</div>
         <div style="background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius-sm);padding:1rem;font-size:.875rem;line-height:1.7;white-space:pre-wrap;color:var(--gray-600)">${a.letter}</div>
       </div>`;
-    document.getElementById('modal-app-detail-footer').innerHTML = `
+          document.getElementById("modal-app-detail-footer").innerHTML = `
       <button class="btn btn-ghost" onclick="closeModal('modal-app-detail')">Fermer</button>
-      <button class="btn btn-danger btn-sm" onclick="respondApp('${a.id}','rejected')">❌ Rejeter</button>
-      <button class="btn btn-outline btn-sm" style="color:var(--info);border-color:var(--info)" onclick="respondApp('${a.id}','interview')">📅 Entretien</button>
-      <button class="btn btn-success btn-sm" onclick="respondApp('${a.id}','accepted')">✅ Accepter</button>`;
-    openModal('modal-app-detail');
-  } catch (e) { console.error(e); }
-}
+      <button class="btn btn-danger btn-sm" onclick="respondApp('${a.id}','rejected')"> Rejeter</button>
+      <button class="btn btn-outline btn-sm" style="color:var(--info);border-color:var(--info)" onclick="respondApp('${a.id}','interview')"> Entretien</button>
+      <button class="btn btn-success btn-sm" onclick="respondApp('${a.id}','accepted')"> Accepter</button>`;
+          openModal("modal-app-detail");
+        } catch (e) {
+          console.error(e);
+        }
+      }
 
-async function respondApp(appId, status) {
-  try {
-    await apiPut('/applications/' + appId + '/status', { status });
-    closeModal('modal-app-detail');
-    renderCompanyDash();
-    showSuccess('📨', 'Réponse envoyée !', 'Le candidat a été notifié de votre décision.');
-  } catch (e) { console.error(e); }
-}
+      async function respondApp(appId, status) {
+        try {
+          await apiPut("/applications/" + appId + "/status", { status });
+          closeModal("modal-app-detail");
+          renderCompanyDash();
+          showSuccess(
+            "",
+            "Réponse envoyée !",
+            "Le candidat a été notifié de votre décision.",
+          );
+        } catch (e) {
+          console.error(e);
+        }
+      }
 
-// ═══════════════════════════════════════════════════
-//  ADMIN DASHBOARD
-// ═══════════════════════════════════════════════════
-async function renderAdminDash() {
-  try {
-    const stats = await apiGet('/admin/dashboard');
-    document.getElementById('admin-stats-grid').innerHTML = `
+      // ── ADMIN DASHBOARD ──
+      async function renderAdminDash() {
+        try {
+          const stats = await apiGet("/admin/dashboard");
+          document.getElementById("admin-stats-grid").innerHTML = `
       <div class="stat-box teal"><div class="label">Candidats validés</div><div class="value">${stats.validatedCandidates}</div><div class="sub">/ ${stats.totalCandidates} total</div></div>
       <div class="stat-box warning"><div class="label">Candidats en attente</div><div class="value" style="color:var(--warning)">${stats.pendingCandidates}</div></div>
       <div class="stat-box navy"><div class="label">Entreprises validées</div><div class="value">${stats.validatedCompanies}</div><div class="sub">/ ${stats.totalCompanies} total</div></div>
       <div class="stat-box danger"><div class="label">Entreprises en attente</div><div class="value">${stats.pendingCompanies}</div></div>
       <div class="stat-box success"><div class="label">Offres publiées</div><div class="value">${stats.totalOffers}</div></div>
-      <div class="stat-box teal"><div class="label">Candidatures totales</div><div class="value">${stats.totalApplications}</div></div>`;
-    renderAdminCandidatesTable('all');
-    renderAdminCompaniesTable('all');
-    renderAdminOffersTable();
-  } catch (e) { console.error(e); }
-}
+      <div class="stat-box teal"><div class="label">Candidatures totales</div><div class="value">${stats.totalApplications}</div></div>
+      <div class="stat-box danger"><div class="label">Comptes supprimés</div><div class="value">${stats.deletedAccounts || 0}</div></div>`;
+          renderAdminCandidatesTable("all");
+          renderAdminCompaniesTable("all");
+          renderAdminOffersTable();
+          loadAdminNotifs();
+        } catch (e) {
+          console.error(e);
+        }
+      }
 
-function adminTab(tab) {
-  ['overview', 'candidates', 'companies', 'offers'].forEach(t => {
-    document.getElementById('a-' + t).classList.add('hidden');
-    document.getElementById('atab-' + t).classList.remove('active');
-  });
-  document.getElementById('a-' + tab).classList.remove('hidden');
-  document.getElementById('atab-' + tab).classList.add('active');
-}
+      function adminTab(tab) {
+        [
+          "overview",
+          "candidates",
+          "companies",
+          "offers",
+          "deleted",
+          "notifications",
+        ].forEach((t) => {
+          document.getElementById("a-" + t).classList.add("hidden");
+          document.getElementById("atab-" + t).classList.remove("active");
+        });
+        document.getElementById("a-" + tab).classList.remove("hidden");
+        document.getElementById("atab-" + tab).classList.add("active");
+        if (tab === "deleted") loadAdminDeleted();
+        if (tab === "notifications") loadAdminNotifs();
+      }
 
-async function filterAdminUsers(status, type) {
-  if (type === 'candidate') renderAdminCandidatesTable(status);
-  else renderAdminCompaniesTable(status);
-}
+      function filterAdminUsers(status, type) {
+        if (type === "candidate") renderAdminCandidatesTable(status);
+        else renderAdminCompaniesTable(status);
+      }
 
-async function renderAdminCandidatesTable(filter = 'all') {
-  try {
-    let cands = await apiGet('/admin/candidates');
-    if (filter !== 'all') cands = cands.filter(c => c.status === filter);
-    document.getElementById('admin-candidates-table').innerHTML = cands.map(c => `
+      async function renderAdminCandidatesTable(filter = "all") {
+        try {
+          let cands = await apiGet("/admin/candidates");
+          if (filter !== "all")
+            cands = cands.filter((c) => c.status === filter);
+          document.getElementById("admin-candidates-table").innerHTML =
+            cands
+              .map(
+                (c) => `
       <tr>
         <td><span class="badge badge-teal">${c.id}</span></td>
         <td><strong>${c.prenom} ${c.nom}</strong></td>
         <td>${c.email}</td>
-        <td><span class="badge ${c.status === 'validated' ? 'badge-success' : c.status === 'rejected' ? 'badge-danger' : 'badge-warning'}">${c.status === 'validated' ? '✅ Validé' : c.status === 'rejected' ? '❌ Rejeté' : '⏳ En attente'}</span></td>
-        <td><div class="actions-cell">${c.status === 'pending' ? `<button class="btn btn-success btn-sm" onclick="adminValidate('candidate','${c.id}','validated')">✅ Valider</button><button class="btn btn-danger btn-sm" onclick="adminValidate('candidate','${c.id}','rejected')">❌ Rejeter</button>` : '<span style="color:var(--gray-400);font-size:.8rem">Traité</span>'}</div></td>
-      </tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:2rem">Aucun candidat</td></tr>';
-  } catch (e) { console.error(e); }
-}
+        <td><span class="badge ${c.status === "validated" ? "badge-success" : c.status === "rejected" ? "badge-danger" : "badge-warning"}">${c.status === "validated" ? "✅ Validé" : c.status === "rejected" ? "❌ Rejeté" : "⏳ En attente"}</span></td>
+        <td>
+          <div class="actions-cell">
+            ${
+              c.status === "pending"
+                ? `
+              <button class="btn btn-success btn-sm" onclick="adminValidate('candidate','${c.id}','validated')"> Valider</button>
+              <button class="btn btn-danger btn-sm" onclick="adminValidate('candidate','${c.id}','rejected')"> Rejeter</button>
+            `
+                : '<span style="color:var(--gray-400);font-size:.8rem">Traité</span>'
+            }
+            <button class="btn btn-warning btn-sm" style="color:#fff" onclick="openAdminDeleteModal('candidate','${c.id}')">🗑 Supprimer</button>
+          </div>
+        </td>
+      </tr>`,
+              )
+              .join("") ||
+            '<tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:2rem">Aucun candidat</td></tr>';
+        } catch (e) {
+          console.error(e);
+        }
+      }
 
-async function renderAdminCompaniesTable(filter = 'all') {
-  try {
-    let comps = await apiGet('/admin/companies');
-    if (filter !== 'all') comps = comps.filter(c => c.status === filter);
-    document.getElementById('admin-companies-table').innerHTML = comps.map(c => `
+      async function renderAdminCompaniesTable(filter = "all") {
+        try {
+          let comps = await apiGet("/admin/companies");
+          if (filter !== "all")
+            comps = comps.filter((c) => c.status === filter);
+          document.getElementById("admin-companies-table").innerHTML =
+            comps
+              .map(
+                (c) => `
       <tr>
         <td><span class="badge badge-navy">${c.id}</span></td>
         <td><strong>${c.name}</strong></td>
         <td>${c.email}</td>
         <td>${c.secteur}</td>
-        <td><span class="badge ${c.status === 'validated' ? 'badge-success' : c.status === 'rejected' ? 'badge-danger' : 'badge-warning'}">${c.status === 'validated' ? '✅ Validé' : c.status === 'rejected' ? '❌ Rejeté' : '⏳ En attente'}</span></td>
-        <td><div class="actions-cell">${c.status === 'pending' ? `<button class="btn btn-success btn-sm" onclick="adminValidate('company','${c.id}','validated')">✅ Valider</button><button class="btn btn-danger btn-sm" onclick="adminValidate('company','${c.id}','rejected')">❌ Rejeter</button>` : '<span style="color:var(--gray-400);font-size:.8rem">Traité</span>'}</div></td>
-      </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--gray-400);padding:2rem">Aucune entreprise</td></tr>';
-  } catch (e) { console.error(e); }
-}
+        <td><span class="badge ${c.status === "validated" ? "badge-success" : c.status === "rejected" ? "badge-danger" : "badge-warning"}">${c.status === "validated" ? "✅ Validé" : c.status === "rejected" ? "❌ Rejeté" : "⏳ En attente"}</span></td>
+        <td>
+          <div class="actions-cell">
+            ${
+              c.status === "pending"
+                ? `
+              <button class="btn btn-success btn-sm" onclick="adminValidate('company','${c.id}','validated')"> Valider</button>
+              <button class="btn btn-danger btn-sm" onclick="adminValidate('company','${c.id}','rejected')"> Rejeter</button>
+            `
+                : '<span style="color:var(--gray-400);font-size:.8rem">Traité</span>'
+            }
+            <button class="btn btn-warning btn-sm" style="color:#fff" onclick="openAdminDeleteModal('company','${c.id}')">🗑 Supprimer</button>
+          </div>
+        </td>
+      </tr>`,
+              )
+              .join("") ||
+            '<tr><td colspan="6" style="text-align:center;color:var(--gray-400);padding:2rem">Aucune entreprise</td></tr>';
+        } catch (e) {
+          console.error(e);
+        }
+      }
 
-async function renderAdminOffersTable() {
-  try {
-    const offers = await apiGet('/admin/offers');
-    document.getElementById('admin-offers-table').innerHTML = offers.map(o => `
-      <tr><td><strong>${o.title}</strong></td><td>${o.companyName}</td><td>${o.secteur || '—'}</td><td><span class="badge badge-teal">${o.type}</span></td><td>${o.location}</td></tr>
-    `).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:2rem">Aucune offre</td></tr>';
-  } catch (e) { console.error(e); }
-}
+      async function renderAdminOffersTable() {
+        try {
+          const offers = await apiGet("/admin/offers");
+          document.getElementById("admin-offers-table").innerHTML =
+            offers
+              .map(
+                (o) => `
+      <tr><td><strong>${o.title}</strong></td><td>${o.companyName}</td><td>${o.secteur || "—"}</td><td><span class="badge badge-teal">${o.type}</span></td><td>${o.location}</td></tr>
+    `,
+              )
+              .join("") ||
+            '<tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:2rem">Aucune offre</td></tr>';
+        } catch (e) {
+          console.error(e);
+        }
+      }
 
-async function adminValidate(type, id, status) {
-  try {
-    await apiPut(`/admin/${type === 'candidate' ? 'candidates' : 'companies'}/${id}/validate`, { status });
-    renderAdminDash();
-    showSuccess(status === 'validated' ? '✅' : '❌', status === 'validated' ? 'Compte validé' : 'Compte rejeté', `Le compte a été ${status === 'validated' ? 'validé' : 'rejeté'} avec succès.`);
-  } catch (e) { console.error(e); }
-}
+      async function adminValidate(type, id, status) {
+        try {
+          await apiPut(
+            `/admin/${type === "candidate" ? "candidates" : "companies"}/${id}/validate`,
+            { status },
+          );
+          renderAdminDash();
+          showSuccess(
+            status === "validated" ? "" : "",
+            status === "validated" ? "Compte validé" : "Compte rejeté",
+            `Le compte a été ${status === "validated" ? "validé" : "rejeté"} avec succès.`,
+          );
+        } catch (e) {
+          console.error(e);
+        }
+      }
 
-// ═══════════════════════════════════════════════════
-//  NOTIFICATIONS (simplifiées)
-// ═══════════════════════════════════════════════════
-function updateNotifBadge() {}
-function showNotifications() {
-  openModal('modal-notifications');
-  document.getElementById('modal-notifs-list').innerHTML = '<div class="empty-state"><div class="icon">🔔</div><p>Les notifications seront disponibles prochainement.</p></div>';
-}
+      // ── ADMIN DELETE ──
+      function openAdminDeleteModal(type, id) {
+        document.getElementById("admin-delete-id").value = id;
+        document.getElementById("admin-delete-type").value = type;
+        document.getElementById("admin-delete-reason").value = "";
+        openModal("modal-admin-delete");
+      }
 
-// ═══════════════════════════════════════════════════
-//  HELPERS
-// ═══════════════════════════════════════════════════
-function statusBadge(s) { return s === 'accepted' ? 'badge-success' : s === 'rejected' ? 'badge-danger' : s === 'interview' ? 'badge-info' : 'badge-warning'; }
-function statusLabel(s) { return s === 'accepted' ? '✅ Accepté' : s === 'rejected' ? '❌ Rejeté' : s === 'interview' ? '📅 Entretien' : '⏳ En attente'; }
+      async function confirmAdminDelete() {
+        const id = document.getElementById("admin-delete-id").value;
+        const type = document.getElementById("admin-delete-type").value;
+        const reason =
+          document.getElementById("admin-delete-reason").value ||
+          "Supprime par l admin";
+        try {
+          const res = await fetch(
+            `${API}/admin/${type === "candidate" ? "candidates" : "companies"}/${id}`,
+            {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ reason: reason }),
+            },
+          );
+          const data = await res.json();
+          if (res.ok) {
+            closeModal("modal-admin-delete");
+            renderAdminDash();
+            adminTab("deleted");
+            showSuccess(
+              "🗑",
+              "Compte supprimé",
+              "Le compte a été supprimé et archivé.",
+            );
+          } else {
+            alert("Erreur : " + JSON.stringify(data));
+          }
+        } catch (e) {
+          alert("Erreur réseau : " + e.message);
+        }
+      }
+      // ── ADMIN DELETED ACCOUNTS ──
+      async function loadAdminDeleted() {
+        try {
+          const list = await apiGet("/admin/deleted-accounts");
+          document.getElementById("admin-deleted-table").innerHTML = list.length
+            ? list
+                .map(
+                  (d) => `
+        <tr>
+          <td><span class="badge ${d.accountType === "candidate" ? "badge-teal" : "badge-navy"}">${d.accountType}</span></td>
+          <td><strong>${d.accountName}</strong></td>
+          <td>${d.email}</td>
+          <td><span class="badge badge-gray">${d.accountId}</span></td>
+          <td>${d.deletedBy}</td>
+          <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${d.reason}">${d.reason || "—"}</td>
+          <td>${d.deletedAt ? new Date(d.deletedAt).toLocaleDateString("fr-FR") : ""}</td>
+        </tr>`,
+                )
+                .join("")
+            : '<tr><td colspan="7" style="text-align:center;color:var(--gray-400);padding:2rem">Aucun compte supprimé</td></tr>';
+        } catch (e) {
+          console.error(e);
+        }
+      }
 
-// ═══════════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════════
-renderHomeJobs();
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.add('hidden'); });
-});
-</script>
-</body>
+      // ── ADMIN NOTIFICATIONS ──
+      async function loadAdminNotifs() {
+        try {
+          const notifs = await apiGet("/notifications/admin");
+          const unread = notifs.filter((n) => !n.read).length;
+          const badge = document.getElementById("admin-notif-badge");
+          if (unread > 0) {
+            badge.textContent = unread;
+            badge.classList.remove("hidden");
+          } else badge.classList.add("hidden");
+          document.getElementById("nav-notif-count").textContent = unread;
+          if (unread > 0)
+            document
+              .getElementById("nav-notif-count")
+              .classList.remove("hidden");
+          else
+            document.getElementById("nav-notif-count").classList.add("hidden");
+          const list = document.getElementById("admin-notifs-list");
+          list.innerHTML = notifs.length
+            ? notifs.map((n) => notifItemHTML(n)).join("")
+            : '<div class="empty-state"> <p>Aucune notification.</p></div>';
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      async function markAllReadAdmin() {
+        try {
+          await apiPut("/notifications/admin/read-all", {});
+          loadAdminNotifs();
+        } catch (e) {}
+      }
+
+      // ── NOTIF HELPER ──
+      function notifItemHTML(n) {
+        const icons = {
+          NEW_CANDIDATE: "",
+          NEW_COMPANY: "",
+          APP_RESPONSE: "",
+          NEW_APPLICATION: "",
+          ACCOUNT_DELETED: "",
+          ACCOUNT_VALIDATED: "",
+          ACCOUNT_REJECTED: "",
+          APPLICATION_ABANDONED: "",
+        };
+        const colors = {
+          NEW_CANDIDATE: "teal",
+          NEW_COMPANY: "navy",
+          APP_RESPONSE: "success",
+          NEW_APPLICATION: "teal",
+          ACCOUNT_DELETED: "danger",
+          ACCOUNT_VALIDATED: "success",
+          ACCOUNT_REJECTED: "danger",
+          APPLICATION_ABANDONED: "warning",
+        };
+        const icon = icons[n.type] || "";
+        const color = colors[n.type] || "teal";
+        const unreadClass = !n.read
+          ? `unread-${color === "danger" ? "danger" : color === "warning" ? "warning" : ""}`
+          : "";
+        return `<div class="notif-item ${!n.read ? "unread" : ""} ${unreadClass}" onclick="markNotifRead('${n.id}',this)">
+    <div class="notif-icon ${color}">${icon}</div>
+    <div style="flex:1">
+      <div class="notif-title">${n.type?.replace(/_/g, " ")}</div>
+      <div class="notif-body">${n.message}</div>
+      <div class="notif-time">${n.createdAt ? new Date(n.createdAt).toLocaleString("fr-FR") : ""}</div>
+    </div>
+    ${!n.read ? '<span style="width:8px;height:8px;background:var(--teal);border-radius:50%;flex-shrink:0;margin-top:4px"></span>' : ""}
+  </div>`;
+      }
+
+      async function markNotifRead(id, el) {
+        try {
+          await apiPut("/notifications/" + id + "/read", {});
+          el.classList.remove("unread", "unread-danger", "unread-warning");
+          el.querySelector('span[style*="border-radius:50%"]')?.remove();
+          updateAllNotifBadges();
+        } catch (e) {}
+      }
+
+      async function updateAllNotifBadges() {
+        if (!currentUser) return;
+        try {
+          let count = 0;
+          if (currentUser.role === "admin") {
+            const d = await apiGet("/notifications/admin/unread-count");
+            count = d.count || 0;
+          } else if (currentUser.role === "candidate") {
+            const d = await apiGet(
+              "/notifications/candidate/" + currentUser.id + "/unread-count",
+            );
+            count = d.count || 0;
+          } else if (currentUser.role === "company") {
+            const d = await apiGet(
+              "/notifications/company/" + currentUser.id + "/unread-count",
+            );
+            count = d.count || 0;
+          }
+          const navBadge = document.getElementById("nav-notif-count");
+          navBadge.textContent = count;
+          if (count > 0) navBadge.classList.remove("hidden");
+          else navBadge.classList.add("hidden");
+        } catch (e) {}
+      }
+
+      // ── SHOW NOTIFICATIONS (cloche navbar) ──
+      async function showNotifications() {
+        openModal("modal-notifications");
+        const list = document.getElementById("modal-notifs-list");
+        list.innerHTML =
+          '<div style="text-align:center;padding:2rem;color:var(--gray-400)">Chargement...</div>';
+        try {
+          let notifs = [];
+          if (currentUser?.role === "admin")
+            notifs = await apiGet("/notifications/admin");
+          else if (currentUser?.role === "candidate")
+            notifs = await apiGet("/notifications/candidate/" + currentUser.id);
+          else if (currentUser?.role === "company")
+            notifs = await apiGet("/notifications/company/" + currentUser.id);
+          list.innerHTML = notifs.length
+            ? notifs.map((n) => notifItemHTML(n)).join("")
+            : '<div class="empty-state"> <p>Aucune notification.</p></div>';
+        } catch (e) {
+          list.innerHTML =
+            '<div class="empty-state"> <p>Erreur de chargement.</p></div>';
+        }
+      }
+
+      // ── DELETE OWN ACCOUNT ──
+      function openDeleteAccountModal(role) {
+        deleteAccountRole = role;
+        document.getElementById("delete-reason").value = "";
+        openModal("modal-delete-account");
+      }
+
+      async function confirmDeleteAccount() {
+        const reason = document.getElementById("delete-reason").value;
+        try {
+          await apiDelete("/auth/delete-account", {
+            id: currentUser.id,
+            role: deleteAccountRole,
+            reason,
+          });
+          closeModal("modal-delete-account");
+          logout();
+          showSuccess(
+            "🗑",
+            "Compte supprimé",
+            "Votre compte a été supprimé définitivement.",
+          );
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      // ── HELPERS ──
+      function statusBadge(s) {
+        return s === "accepted"
+          ? "badge-success"
+          : s === "rejected"
+            ? "badge-danger"
+            : s === "interview"
+              ? "badge-info"
+              : s === "abandoned"
+                ? "badge-abandoned"
+                : "badge-warning";
+      }
+      function statusLabel(s) {
+        return s === "accepted"
+          ? " Accepté"
+          : s === "rejected"
+            ? " Rejeté"
+            : s === "interview"
+              ? " Entretien"
+              : s === "abandoned"
+                ? " Abandonné"
+                : " En attente";
+      }
+
+      // ── INIT ──
+      renderHomeJobs();
+      document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+        overlay.addEventListener("click", (e) => {
+          if (e.target === overlay) overlay.classList.add("hidden");
+        });
+      });
+
+      // Rafraîchir les notifs toutes les 30 secondes
+      setInterval(() => {
+        if (currentUser) updateAllNotifBadges();
+      }, 30000);
+    </script>
+  </body>
 </html>
