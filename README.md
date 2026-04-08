@@ -235,18 +235,41 @@ Navigateur (port 5500) ←──── REST API JSON ────→ Spring Boot
             └── 🖼️ transparent-logo.png
 ```
 
+Certains icons dans le dossier "images/icons/" n'ont pas été utilisés dans notre site mais pourraient être implémentés.
 
 ---
 
 ## API REST
 
-_(inchangé — aucun emoji ici)_
+A FAIRE
 
 ---
 
 ## Comptes de test
 
-_(inchangé — aucun emoji ici)_
+Page d'acceuil : 
+
+<div align="center"> 
+<img width="1590" height="808" alt="image" src="https://github.com/user-attachments/assets/796dffa5-9d42-4ecc-a3e5-d6afb264a5de" />
+</div>
+
+Portail Admin : 
+
+<div align="center">
+<img width="1626" height="679" alt="image" src="https://github.com/user-attachments/assets/1faf1c09-bb8e-4f40-bbee-cbac45a91d49" />
+</div>
+
+Portail Entreprise :
+
+<div align="center">
+<img width="1590" height="431" alt="image" src="https://github.com/user-attachments/assets/ee4ade7d-340b-4dc6-b326-ccaacf62a780" />
+</div>
+
+Portail Candidat :
+
+<div align="center">
+<img width="1690" height="438" alt="image" src="https://github.com/user-attachments/assets/66db4c66-c849-4f9e-b036-57dccb92052b" />
+</div>
 
 ---
 
@@ -273,6 +296,10 @@ Réalisé par : SARI Rim et FAHMI Meriem
 
 ## Licence
 
+<div align="center">
+  
 **JoBridge** — Développé dans le cadre du Semestre 6 — Licence 3 Informatique.
+
+</div>
 
 ---
