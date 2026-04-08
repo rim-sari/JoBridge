@@ -2,10 +2,11 @@
 <div align="center">
   
 # JoBridge — Plateforme de recrutement en ligne
+
+**JoBridge connecte les talents avec les entreprises qui recrutent.**
   
 <img width="400" height="400" alt="image" src="https://github.com/user-attachments/assets/7854dc05-1dd1-4ffa-aba1-84f333884494" />
 
-**JoBridge connecte les talents avec les entreprises qui recrutent.**
 
 </div>
 
@@ -17,13 +18,7 @@
 - [Fonctionnalités](#fonctionnalités)
 - [Architecture](#architecture)
 - [Technologies utilisées](#technologies-utilisées)
-- [Démarrage rapide](#démarrage-rapide)
-  - [Prérequis](#prérequis)
-  - [Installation Backend](#1installation--configuration-backend)
-  - [Installation Frontend](#2installation--configuration-frontend)
-  - [Lancer le projet](#3lancer-le-projet)
-
-- [Structure du projet](#structure-du-projet)
+- [Structure du projet](#structure)
 - [API REST](#api-rest)
 - [Comptes de test](#comptes-de-test)
 - [Améliorations prévues](#améliorations-prévues)
