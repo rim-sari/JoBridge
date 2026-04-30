@@ -237,11 +237,6 @@ Navigateur (port 5500) ←──── REST API JSON ────→ Spring Boot
 
 Certains icons dans le dossier "images/icons/" n'ont pas été utilisés dans notre site mais pourraient être implémentés.
 
----
-
-## API REST
-
-A FAIRE
 
 ---
 
